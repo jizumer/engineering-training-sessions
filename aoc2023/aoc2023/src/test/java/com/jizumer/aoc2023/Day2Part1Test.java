@@ -1,6 +1,8 @@
 package com.jizumer.aoc2023;
 
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 
 import java.io.FileNotFoundException;
 
@@ -36,11 +38,22 @@ class Day2Part1Test {
                         .count());
     }
 
-    @Test
-    public void shouldDetectIfAGameIsPossibleGivenTheCubes() {
-        String gameString = "Game 1: 3 blue, 4 red; 1 red, 2 green, 6 blue; 2 green";
+    @ParameterizedTest
+    @CsvSource(value = {
+            "Game 1: 3 blue, 4 red; 1 red, 2 green, 6 blue; 2 green*12*13*14*true",
+            "Game 2: 1 blue, 2 green; 3 green, 4 blue, 1 red; 1 green, 1 blue*12*13*14*true",
+            "Game 3: 8 green, 6 blue, 20 red; 5 blue, 4 red, 13 green; 5 green, 1 red*12*13*14*false",
+            "Game 4: 1 green, 3 red, 6 blue; 3 green, 6 red; 3 green, 15 blue, 14 red*12*13*14*false",
+            "Game 5: 6 red, 1 blue, 3 green; 2 blue, 1 red, 2 green*12*13*14*true"
+    }, delimiter = '*')
+    public void shouldDetectIfAGameIsPossibleGivenTheCubes(String gameString,
+                                                           String red,
+                                                           String green,
+                                                           String blue,
+                                                           String expected) {
         Game game = new Game(gameString);
-        assertTrue(game.isPossible(12, 13,14));
+        assertEquals(Boolean.parseBoolean(expected),
+                game.isPossible(Integer.parseInt(red), Integer.parseInt(green), Integer.parseInt(blue)));
     }
 
 
