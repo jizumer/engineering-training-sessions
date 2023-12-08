@@ -56,5 +56,16 @@ class Day2Part1Test {
                 game.isPossible(Integer.parseInt(red), Integer.parseInt(green), Integer.parseInt(blue)));
     }
 
+    @Test
+    public void shouldSumTheIdsOfGamesThatArePossible() throws FileNotFoundException {
+        assertEquals(2265,
+                new Day2Part1()
+                        .loadGames("src/test/resources/day2-input.txt")
+                        .stream()
+                        .map(Game::new)
+                        .filter(game -> game.isPossible(12, 13, 14))
+                        .mapToInt(Game::getId)
+                        .sum());
+    }
 
 }
