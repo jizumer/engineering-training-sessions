@@ -16,4 +16,15 @@ class Day2Part1Test {
                         .size());
     }
 
+    @Test
+    public void shouldGenerateAGameFromAString() {
+        String gameString = "Game 83: 2 green, 11 red, 20 blue; 20 blue, 1 green, 4 red; 2 green, 6 red, 20 blue; 17 blue, 10 red";
+        Game game = new Game(gameString);
+        assertEquals(83, game.getId());
+        assertEquals(game.getGreen(), 2);
+        assertEquals(game.getRed(), 11);
+        assertEquals(game.getBlue(), 20);
+    }
+
+
 }
