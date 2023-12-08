@@ -1,5 +1,9 @@
 package com.jizumer.aoc2023;
 
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+
 import static java.lang.Character.isDigit;
 
 public class Day1Part2 {
@@ -64,4 +68,11 @@ public class Day1Part2 {
         }
     }
 
+    public int calculateCalibrationValues(String calibrationValuesFilePath) throws FileNotFoundException {
+        BufferedReader bufferedReader = new BufferedReader(new FileReader(calibrationValuesFilePath));
+        return bufferedReader
+                .lines()
+                .mapToInt(this::parseCalibrationValue)
+                .sum();
+    }
 }
