@@ -30,7 +30,7 @@ class Day1Part2Test {
     @Test
     void shouldLoadInputFileAndCalculateSum() throws IOException {
         Assertions.assertEquals(52834,
-                new Day1Part2().calculateCalibrationValues("src/test/resources/input.txt"));
+                new Day1Part2().calculateCalibrationValues("src/test/resources/day1-input.txt"));
     }
 
 }
