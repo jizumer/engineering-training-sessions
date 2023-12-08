@@ -1,6 +1,7 @@
 package com.jizumer.aoc2023;
 
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -8,9 +9,18 @@ import static org.junit.jupiter.api.Assertions.*;
 //https://adventofcode.com/2023/day/1
 class Day1Part2Test {
 
-    @Test
-    public void shouldDetectNumbersWrittenWithLetters(){
-        assertEquals(29,new Day1Part2().parseCalibrationValue("two1nine"));
+    @ParameterizedTest
+    @CsvSource({
+            "two1nine, 29",
+            "eightwothree, 83",
+            "abcone2threexyz, 13",
+            "xtwone3four, 24",
+            "4nineeightseven2, 42",
+            "zoneight234, 14",
+            "7pqrstsixteen, 76",
+    })
+    public void shouldDetectNumbersWrittenWithLetters(String calibrationLine, int expected) {
+        assertEquals(expected, new Day1Part2().parseCalibrationValue(calibrationLine));
     }
 
 }

@@ -29,7 +29,7 @@ public class Day1Part2 {
                 break;
             }
             if (isDigit(calibrationLine.charAt(i))) {
-                lastDigit = calibrationLine.charAt(i);
+                lastDigit = Integer.parseInt(String.valueOf(calibrationLine.charAt(i)));
                 break;
             }
             i--;
