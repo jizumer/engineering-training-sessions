@@ -75,4 +75,10 @@ class Game {
     public int getBlue() {
         return blue;
     }
+
+    public boolean isPossible(int red, int green, int blue) {
+        return this.red <= red
+                && this.green <= green
+                && this.blue <= blue;
+    }
 }

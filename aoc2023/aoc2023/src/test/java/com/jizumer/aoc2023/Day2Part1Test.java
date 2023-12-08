@@ -26,5 +26,22 @@ class Day2Part1Test {
         assertEquals(game.getBlue(), 20);
     }
 
+    @Test
+    public void shouldGenerateAListOfGamesFromAListOfStrings() throws FileNotFoundException {
+        assertEquals(100,
+                new Day2Part1()
+                        .loadGames("src/test/resources/day2-input.txt")
+                        .stream()
+                        .map(Game::new)
+                        .count());
+    }
+
+    @Test
+    public void shouldDetectIfAGameIsPossibleGivenTheCubes() {
+        String gameString = "Game 1: 3 blue, 4 red; 1 red, 2 green, 6 blue; 2 green";
+        Game game = new Game(gameString);
+        assertTrue(game.isPossible(12, 13,14));
+    }
+
 
 }
