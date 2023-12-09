@@ -12,13 +12,13 @@ class Day3Test {
     private static final String SMALL_INPUT = "src/test/resources/day3-input-small.txt";
 
     @Test
-    public void shouldCalculateGearRatios() throws IOException {
-        assertEquals(4361, new Day3().calculateGearRatios(SMALL_INPUT));
+    public void shouldCalculateSumOfPartNumbers() throws IOException {
+        assertEquals(4361, new Day3().calculateSumOfPartNumbers(SMALL_INPUT));
     }
 
     @Test
-    public void shouldCalculateGearRatiosForLargeInput() throws IOException {
-        assertEquals(525181, new Day3().calculateGearRatios("src/test/resources/day3-input.txt"));
+    public void shouldCalculateSumOfPartNumbersForLargeInput() throws IOException {
+        assertEquals(525181, new Day3().calculateSumOfPartNumbers("src/test/resources/day3-input.txt"));
     }
 
     @ParameterizedTest

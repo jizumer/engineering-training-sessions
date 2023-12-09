@@ -10,11 +10,11 @@ import static java.lang.Character.isDigit;
 
 public class Day3 {
 
-    private final List<GearNumber> gearNumbers = new ArrayList<>();
+    private final List<PartNumber> partNumbers = new ArrayList<>();
     private final List<int[]> coordinatesOfSymbols = new ArrayList<>();
 
 
-    public int calculateGearRatios(String engineSchematicFilePath) throws IOException {
+    public int calculateSumOfPartNumbers(String engineSchematicFilePath) throws IOException {
         BufferedReader reader = new BufferedReader(new FileReader(engineSchematicFilePath));
         int lineNumber = 0;
         while (reader.ready()) {
@@ -22,34 +22,34 @@ public class Day3 {
             lineNumber++;
         }
         reader.close();
-        calculateSurroundedNumbers();
-        return calculateSumOfGearNumbers();
+        calculateSurroundedPartNumbers();
+        return calculateSumOfPartNumbers();
 
     }
 
-    private void calculateSurroundedNumbers() {
-        for(GearNumber gearNumber : gearNumbers){
+    private void calculateSurroundedPartNumbers() {
+        for(PartNumber partNumber : this.partNumbers){
             for(int[] coordinates : coordinatesOfSymbols){
-                if(isAdjacent(gearNumber, coordinates)){
-                    gearNumber.setSurroundedBySymbol(true);
+                if(isAdjacent(partNumber, coordinates)){
+                    partNumber.setSurroundedBySymbol(true);
                     break;
                 }
             }
         }
     }
 
-    private boolean isAdjacent(GearNumber gearNumber, int[] coordinatesOfSymbol) {
-        int gearNumberLength = String.valueOf(gearNumber.getValue()).length();
-        if(coordinatesOfSymbol[0] < gearNumber.getX() - 1 || coordinatesOfSymbol[0] > gearNumber.getX() + 1){
+    private boolean isAdjacent(PartNumber partNumber, int[] coordinatesOfSymbol) {
+        int gearNumberLength = String.valueOf(partNumber.getValue()).length();
+        if(coordinatesOfSymbol[0] < partNumber.getX() - 1 || coordinatesOfSymbol[0] > partNumber.getX() + 1){
             return false;
         }
-        return coordinatesOfSymbol[1] >= gearNumber.getY() - 1 && coordinatesOfSymbol[1] <= gearNumber.getY() + gearNumberLength;
+        return coordinatesOfSymbol[1] >= partNumber.getY() - 1 && coordinatesOfSymbol[1] <= partNumber.getY() + gearNumberLength;
     }
 
-    private int calculateSumOfGearNumbers() {
-        return gearNumbers.stream()
-                .filter(GearNumber::isSurroundedBySymbol)
-                .mapToInt(GearNumber::getValue)
+    private int calculateSumOfPartNumbers() {
+        return partNumbers.stream()
+                .filter(PartNumber::isSurroundedBySymbol)
+                .mapToInt(PartNumber::getValue)
                 .sum();
     }
 
@@ -57,7 +57,7 @@ public class Day3 {
         for (int i = 0; i < line.length(); i++) {
             if (isDigit(line.charAt(i))) {
                 int value = extractNumber(line, i);
-                gearNumbers.add(new GearNumber(value, lineNumber, i));
+                partNumbers.add(new PartNumber(value, lineNumber, i));
                 i += String.valueOf(value).length() - 1;
                 continue;
             }
@@ -80,14 +80,14 @@ public class Day3 {
         return !Character.isDigit(c) && c != '.';
     }
 
-    private static class GearNumber {
+    private static class PartNumber {
         private final int value;
         private final int x;
         private final int y;
 
         private boolean isSurroundedBySymbol = false;
 
-        public GearNumber(int value, int x, int y) {
+        public PartNumber(int value, int x, int y) {
             this.value = value;
             this.x = x;
             this.y = y;
