@@ -83,4 +83,7 @@ class Game {
                 && this.blue <= blue;
     }
 
+    public int getPower() {
+        return this.red * this.green * this.blue;
+    }
 }
