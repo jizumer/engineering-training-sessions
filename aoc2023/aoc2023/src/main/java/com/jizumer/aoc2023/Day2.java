@@ -9,7 +9,7 @@ import java.util.stream.Collectors;
 
 import static java.lang.Math.max;
 
-public class Day2Part1 {
+public class Day2 {
     List<String> loadGames(String s) throws FileNotFoundException {
         BufferedReader reader = new BufferedReader(new FileReader(s));
         return reader.lines().collect(Collectors.toList());
@@ -60,6 +60,7 @@ class Game {
 
     }
 
+
     public int getId() {
         return id;
     }
@@ -81,4 +82,5 @@ class Game {
                 && this.green <= green
                 && this.blue <= blue;
     }
+
 }
