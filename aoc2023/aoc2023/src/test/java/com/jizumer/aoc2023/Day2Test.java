@@ -104,4 +104,15 @@ class Day2Test {
 
     }
 
+    @Test
+    public void shouldCalculateTheSumOfThePowerOfAllGames() throws FileNotFoundException {
+        assertEquals(64097,
+                new Day2()
+                        .loadGames("src/test/resources/day2-input.txt")
+                        .stream()
+                        .map(Game::new)
+                        .mapToInt(Game::getPower)
+                        .sum());
+    }
+
 }
