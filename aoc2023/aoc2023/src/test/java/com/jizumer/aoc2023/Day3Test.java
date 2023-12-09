@@ -17,6 +17,16 @@ class Day3Test {
     }
 
     @Test
+    public void shouldCalculateSumOfGearRatiosForSmallInput() throws IOException {
+        assertEquals(467835, new Day3().calculateSumOfGearRatios(SMALL_INPUT));
+    }
+
+    @Test
+    public void shouldCalculateSumOfGearRatiosForLargeInput() throws IOException {
+        assertEquals(84289137, new Day3().calculateSumOfGearRatios("src/test/resources/day3-input.txt"));
+    }
+
+    @Test
     public void shouldCalculateSumOfPartNumbersForLargeInput() throws IOException {
         assertEquals(525181, new Day3().calculateSumOfPartNumbers("src/test/resources/day3-input.txt"));
     }
