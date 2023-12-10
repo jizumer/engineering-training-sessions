@@ -5,9 +5,8 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.atomic.AtomicLong;
-import java.util.stream.Collectors;
 import java.util.stream.LongStream;
+import java.util.stream.Stream;
 
 import static java.lang.Long.parseLong;
 
@@ -19,13 +18,13 @@ public class Day5Part2 {
 
     public static class Almanac {
         //Format for sees will now be pairs of initial value and length of ranges
-        private final List<Long[]> seeds;
+        private final List<SeedRange> seedRanges;
         private final List<Map> maps;
 
         public Almanac(String filePath) throws IOException {
             BufferedReader reader = new BufferedReader(new FileReader(filePath));
 
-            this.seeds = loadSeeds(reader.readLine());
+            this.seedRanges = loadSeedRanges(reader.readLine());
 
             long skipped = reader.skip(1);
             if (skipped != 1) {
@@ -60,50 +59,57 @@ public class Day5Part2 {
             reader.close();
         }
 
-        private List<Long[]> loadSeeds(String seedsLine) {
-            List<Long[]> seeds = new ArrayList<>();
-            String[] seedRanges = seedsLine.substring(7)
+        private List<SeedRange> loadSeedRanges(String seedsLine) {
+            List<SeedRange> seedRanges = new ArrayList<>();
+            String[] seedParameters = seedsLine.substring(7)
                     .trim()
                     .split(" ");
 
-            for (int i = 0; i < seedRanges.length; i += 2) {
-                seeds.add(new Long[]{parseLong(seedRanges[i]), parseLong(seedRanges[i + 1])});
+            for (int i = 0; i < seedParameters.length; i += 2) {
+                seedRanges.add(new SeedRange(parseLong(seedParameters[i]),
+                        parseLong(seedParameters[i + 1])));
             }
-            return seeds;
+            return seedRanges;
         }
 
-        public List<Long> getSeeds() {
-            List<Long> seeds = new ArrayList<>();
-            for (Long[] seed : this.seeds) {
-                seeds.addAll(LongStream.range(seed[0],
-                                seed[0] + seed[1])
-                        .boxed()
-                        .toList());
+        public Stream<Long> getSeedRanges() {
+
+            return this.seedRanges
+                    .stream()
+                    .map(seedRange -> LongStream.range(seedRange.getStart(),
+                            seedRange.getStart() + seedRange.getLength()))
+                    .flatMap(LongStream::boxed);
+
+        }
+
+        public long calculateLowestLocation() {
+            return getSeedRanges()
+                    .map(this::applyMaps).min(Long::compareTo).orElseThrow();
+        }
+
+        private long applyMaps(Long seed) {
+            for (Map map : maps) {
+                seed = map.map(seed);
             }
-            return seeds;
+            return seed;
+        }
+    }
+
+    private static class SeedRange {
+        private final long start;
+        private final long length;
+
+        public SeedRange(long start, long length) {
+            this.start = start;
+            this.length = length;
         }
 
-        public java.util.Map<Long, Long> calculateLocationPerSeed() {
-            return getSeeds()
-                    .stream()
-                    .map(seed -> {
-                        AtomicLong location = new AtomicLong(seed);
-                        maps.stream()
-                                .forEachOrdered(map ->
-                                        location.set(map.map(location.get())));
-                        return java.util.Map.entry(seed, location.get());
-                    }).collect(Collectors.toMap(
-                            java.util.Map.Entry::getKey,
-                            java.util.Map.Entry::getValue));
+        public long getStart() {
+            return start;
         }
 
-        public long calculateLowestLocationPerSeed() {
-            return calculateLocationPerSeed()
-                    .values()
-                    .stream()
-                    .mapToLong(Long::longValue)
-                    .min()
-                    .orElseThrow();
+        public long getLength() {
+            return length;
         }
     }
 
@@ -134,7 +140,7 @@ public class Day5Part2 {
             return ranges
                     .stream()
                     .filter(range -> range.appliesTo(from))
-                    .findFirst()
+                    .findAny()
                     .map(range -> range.map(from))
                     .orElse(from);
         }

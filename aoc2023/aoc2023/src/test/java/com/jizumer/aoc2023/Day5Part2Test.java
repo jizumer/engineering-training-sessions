@@ -14,14 +14,23 @@ class Day5Part2Test {
         assertEquals(27,
                 new Day5Part2()
                         .loadAlmanac(SMALL_INPUT_PATH)
-                        .getSeeds().size());
+                        .getSeedRanges()
+                        .toList().size());
+
     }
 
     @Test
     public void shouldCalculateTheRightLowestLocationNumber() throws IOException {
-        assertEquals(46, new Day5Part2()
+        assertEquals(46L, new Day5Part2()
                 .loadAlmanac(SMALL_INPUT_PATH)
-                .calculateLowestLocationPerSeed());
+                .calculateLowestLocation());
+    }
+
+    @Test
+    public void shouldCalculateTheRightLowestLocationNumberForTheBigInput() throws IOException {
+        assertEquals(46L, new Day5Part2()
+                .loadAlmanac("src/test/resources/day5-input.txt")
+                .calculateLowestLocation());
     }
 
 }
