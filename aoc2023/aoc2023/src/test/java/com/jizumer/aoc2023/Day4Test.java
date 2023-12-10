@@ -1,7 +1,10 @@
 package com.jizumer.aoc2023;
 
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
+
+import java.io.FileNotFoundException;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -20,6 +23,12 @@ class Day4Test {
         assertEquals(expectedPoints,
                 Day4.calculateWinningPointsForLine(line));
 
+    }
+
+    @Test
+    public void shouldCalculateSumOfWiningPointsForAGivenFilePath() throws FileNotFoundException {
+        assertEquals(23441,
+                Day4.calculateSumOfWinningPointsForFile("src/test/resources/day4-input.txt"));
     }
 
 }
