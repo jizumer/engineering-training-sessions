@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 
 public class Day5 {
 
@@ -85,6 +86,10 @@ public class Day5 {
 
         public String getTo() {
             return to;
+        }
+
+        public List<Range> getRanges() {
+            return ranges;
         }
     }
 

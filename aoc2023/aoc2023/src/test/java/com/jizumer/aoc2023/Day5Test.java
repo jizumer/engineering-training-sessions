@@ -31,4 +31,12 @@ class Day5Test {
         assertEquals("fertilizer", almanac.getMaps().get(1).getTo());
     }
 
+    @Test
+    public void shouldLoadAlmanacContainingAMapWithRanges() throws IOException {
+        List<Day5.Map> maps = new Day5().loadAlmanac(SMALL_INPUT_PATH).getMaps();
+        assertEquals(2, maps.get(0).getRanges().size());
+        assertEquals(3, maps.get(1).getRanges().size());
+        assertEquals(4, maps.get(2).getRanges().size());
+    }
+
 }
