@@ -3,7 +3,6 @@ package com.jizumer.aoc2023;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class Day4 {
     public static int calculateWinningPointsForLine(String line) {
