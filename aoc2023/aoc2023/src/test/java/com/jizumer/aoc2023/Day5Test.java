@@ -15,7 +15,7 @@ class Day5Test {
 
     @Test
     public void shouldLoadAlmanacFromFileContainingInitialSeeds() throws IOException {
-        assertEquals(List.of(79, 14, 55, 13), new Day5().loadAlmanac(SMALL_INPUT_PATH).getSeeds());
+        assertEquals(List.of(79L, 14L, 55L, 13L), new Day5().loadAlmanac(SMALL_INPUT_PATH).getSeeds());
     }
 
     @Test
@@ -55,10 +55,10 @@ class Day5Test {
     @Test
     public void shouldCalculateLocationCorrespondingtoEachSeed() throws IOException {
         Day5.Almanac almanac = new Day5().loadAlmanac(SMALL_INPUT_PATH);
-        assertEquals(Map.of(79, 82,
-                        14, 43,
-                        55, 86,
-                        13, 35),
+        assertEquals(Map.of(79L, 82L,
+                        14L, 43L,
+                        55L, 86L,
+                        13L, 35L),
                 almanac.calculateLocationPerSeed());
     }
 
@@ -68,7 +68,10 @@ class Day5Test {
                 new Day5()
                         .loadAlmanac(SMALL_INPUT_PATH)
                         .calculateLowestLocationPerSeed());
-
+        assertEquals(621354867L,
+                new Day5()
+                        .loadAlmanac(LARGE_INPUT_PATH)
+                        .calculateLowestLocationPerSeed());
     }
 
 }

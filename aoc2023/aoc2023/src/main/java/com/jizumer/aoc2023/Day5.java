@@ -6,7 +6,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.concurrent.atomic.AtomicInteger;
+import java.util.concurrent.atomic.AtomicLong;
 import java.util.stream.Collectors;
 
 public class Day5 {
@@ -16,7 +16,7 @@ public class Day5 {
     }
 
     public static class Almanac {
-        private final List<Integer> seeds;
+        private final List<Long> seeds;
         private final List<Map> maps;
 
         public Almanac(String filePath) throws IOException {
@@ -27,7 +27,7 @@ public class Day5 {
                             .substring(7)
                             .trim()
                             .split(" "))
-                    .map(Integer::parseInt)
+                    .map(Long::parseLong)
                     .toList();
 
             long skipped = reader.skip(1);
@@ -52,19 +52,18 @@ public class Day5 {
                         break;
                     }
                     String[] rangeValues = line.split(" ");
-                    ranges.add(new Range(Integer.parseInt(rangeValues[0]),
-                            Integer.parseInt(rangeValues[1]),
-                            Integer.parseInt(rangeValues[2])));
+                    ranges.add(new Range(Long.parseLong(rangeValues[0]),
+                            Long.parseLong(rangeValues[1]),
+                            Long.parseLong(rangeValues[2])));
                 }
 
-                this.maps.add(
-                        new Map(from, to, ranges));
+                this.maps.add(new Map(from, to, ranges));
             }
 
             reader.close();
         }
 
-        public List<Integer> getSeeds() {
+        public List<Long> getSeeds() {
             return seeds;
         }
 
@@ -72,11 +71,11 @@ public class Day5 {
             return maps;
         }
 
-        public java.util.Map<Integer, Integer> calculateLocationPerSeed() {
+        public java.util.Map<Long, Long> calculateLocationPerSeed() {
             return seeds
                     .stream()
                     .map(seed -> {
-                        AtomicInteger location = new AtomicInteger(seed);
+                        AtomicLong location = new AtomicLong(seed);
                         maps.stream()
                                 .forEachOrdered(map ->
                                         location.set(map.map(location.get())));
@@ -86,11 +85,11 @@ public class Day5 {
                             java.util.Map.Entry::getValue));
         }
 
-        public int calculateLowestLocationPerSeed() {
+        public long calculateLowestLocationPerSeed() {
             return calculateLocationPerSeed()
                     .values()
                     .stream()
-                    .mapToInt(Integer::intValue)
+                    .mapToLong(Long::longValue)
                     .min()
                     .orElseThrow();
         }
@@ -119,7 +118,7 @@ public class Day5 {
             return ranges;
         }
 
-        public int map(int from) {
+        public long map(long from) {
             return ranges
                     .stream()
                     .filter(range -> range.appliesTo(from))
@@ -130,24 +129,24 @@ public class Day5 {
     }
 
     public static class Range {
-        private final int destinationRangeStart;
-        private final int sourceRangeStart;
-        private final int rangeLength;
+        private final long destinationRangeStart;
+        private final long sourceRangeStart;
+        private final long rangeLength;
 
-        public Range(int destinationRangeStart,
-                     int sourceRangeStart,
-                     int rangeLength) {
+        public Range(long destinationRangeStart,
+                     long sourceRangeStart,
+                     long rangeLength) {
             this.destinationRangeStart = destinationRangeStart;
             this.sourceRangeStart = sourceRangeStart;
             this.rangeLength = rangeLength;
         }
 
-        public boolean appliesTo(int value) {
+        public boolean appliesTo(long value) {
             return value >= sourceRangeStart
                     && value < sourceRangeStart + rangeLength;
         }
 
-        public int map(int from) {
+        public long map(long from) {
             return destinationRangeStart
                     + (from - sourceRangeStart);
         }
