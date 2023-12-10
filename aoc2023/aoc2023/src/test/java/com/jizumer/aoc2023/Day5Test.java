@@ -4,6 +4,7 @@ import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -19,7 +20,7 @@ class Day5Test {
 
     @Test
     public void shouldLoadAlmanacContainingListOfMaps() throws IOException {
-        assertEquals(7,new Day5().loadAlmanac(SMALL_INPUT_PATH).getMaps().size());
+        assertEquals(7, new Day5().loadAlmanac(SMALL_INPUT_PATH).getMaps().size());
     }
 
     @Test
@@ -50,5 +51,16 @@ class Day5Test {
         assertEquals(55, map.map(53));
         assertEquals(10, map.map(10));
     }
+
+    @Test
+    public void shouldCalculateLocationCorrespondingtoEachSeed() throws IOException {
+        Day5.Almanac almanac = new Day5().loadAlmanac(SMALL_INPUT_PATH);
+        assertEquals(Map.of(79, 82,
+                        14, 43,
+                        55, 86,
+                        13, 35),
+                almanac.calculateLocationPerSeed());
+    }
+
 
 }

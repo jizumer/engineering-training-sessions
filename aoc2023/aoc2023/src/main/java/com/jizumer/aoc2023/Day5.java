@@ -6,6 +6,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicInteger;
+import java.util.stream.Collectors;
 
 public class Day5 {
 
@@ -68,6 +70,20 @@ public class Day5 {
 
         public List<Day5.Map> getMaps() {
             return maps;
+        }
+
+        public java.util.Map<Integer, Integer> calculateLocationPerSeed() {
+            return seeds
+                    .stream()
+                    .map(seed -> {
+                        AtomicInteger location = new AtomicInteger(seed);
+                        maps.stream()
+                                .forEachOrdered(map ->
+                                        location.set(map.map(location.get())));
+                        return java.util.Map.entry(seed, location.get());
+                    }).collect(Collectors.toMap(
+                            java.util.Map.Entry::getKey,
+                            java.util.Map.Entry::getValue));
         }
     }
 
