@@ -35,7 +35,9 @@ public class Day5 {
             while (reader.ready()) {
                 String[] fromTo = reader.readLine().split("-");
                 String from = fromTo[0].trim();
-                String to = fromTo[2].trim();
+                String to = fromTo[2]
+                        .trim()
+                        .split(" ")[0];
 
                 List<Range> ranges = new ArrayList<>();
 
@@ -75,6 +77,14 @@ public class Day5 {
             this.from = from;
             this.to = to;
             this.ranges = ranges;
+        }
+
+        public String getFrom() {
+            return from;
+        }
+
+        public String getTo() {
+            return to;
         }
     }
 
