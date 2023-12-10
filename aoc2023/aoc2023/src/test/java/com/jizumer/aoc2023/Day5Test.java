@@ -17,4 +17,9 @@ class Day5Test {
         assertEquals(List.of(79, 14, 55, 13), new Day5().loadAlmanac(SMALL_INPUT_PATH).getSeeds());
     }
 
+    @Test
+    public void shouldLoadAlmanacContainingListOfMaps() throws IOException {
+        assertEquals(7,new Day5().loadAlmanac(SMALL_INPUT_PATH).getMaps().size());
+    }
+
 }
