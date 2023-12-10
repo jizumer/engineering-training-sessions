@@ -31,4 +31,16 @@ class Day4Test {
                 Day4.calculateSumOfWinningPointsForFile("src/test/resources/day4-input.txt"));
     }
 
+    @Test
+    public void shouldCalculateTotalNumOfCardsForAGivenSmallFile() throws FileNotFoundException {
+        assertEquals(30,
+                Day4.calculateTotalNumOfCardsForAGivenFile("src/test/resources/day4-input-small.txt"));
+    }
+
+    @Test
+    public void shouldCalculateTotalNumOfCardsForAGivenFile() throws FileNotFoundException {
+        assertEquals(5923918,
+                Day4.calculateTotalNumOfCardsForAGivenFile("src/test/resources/day4-input.txt"));
+    }
+
 }
