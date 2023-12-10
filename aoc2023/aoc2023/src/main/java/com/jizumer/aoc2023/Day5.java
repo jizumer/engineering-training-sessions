@@ -85,6 +85,15 @@ public class Day5 {
                             java.util.Map.Entry::getKey,
                             java.util.Map.Entry::getValue));
         }
+
+        public int calculateLowestLocationPerSeed() {
+            return calculateLocationPerSeed()
+                    .values()
+                    .stream()
+                    .mapToInt(Integer::intValue)
+                    .min()
+                    .orElseThrow();
+        }
     }
 
     public static class Map {

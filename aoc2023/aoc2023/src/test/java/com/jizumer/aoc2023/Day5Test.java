@@ -62,5 +62,13 @@ class Day5Test {
                 almanac.calculateLocationPerSeed());
     }
 
+    @Test
+    public void shouldCalculateTheLowestLocationNumber() throws IOException {
+        assertEquals(35,
+                new Day5()
+                        .loadAlmanac(SMALL_INPUT_PATH)
+                        .calculateLowestLocationPerSeed());
+
+    }
 
 }
