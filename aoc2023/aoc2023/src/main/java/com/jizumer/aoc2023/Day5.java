@@ -6,7 +6,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Map;
 
 public class Day5 {
 
@@ -14,7 +13,7 @@ public class Day5 {
         return new Almanac(filePath);
     }
 
-    public class Almanac {
+    public static class Almanac {
         private final List<Integer> seeds;
         private final List<Map> maps;
 
@@ -29,7 +28,10 @@ public class Day5 {
                     .map(Integer::parseInt)
                     .toList();
 
-            reader.skip(1);
+            long skipped = reader.skip(1);
+            if (skipped != 1) {
+                throw new RuntimeException("Error skipping line");
+            }
 
             this.maps = new ArrayList<>();
 
@@ -69,7 +71,7 @@ public class Day5 {
         }
     }
 
-    public class Map {
+    public static class Map {
         private final String from;
         private final String to;
         private final List<Range> ranges;
@@ -91,13 +93,38 @@ public class Day5 {
         public List<Range> getRanges() {
             return ranges;
         }
+
+        public int map(int from) {
+            return ranges
+                    .stream()
+                    .filter(range -> range.appliesTo(from))
+                    .findFirst()
+                    .map(range -> range.map(from))
+                    .orElse(from);
+        }
     }
 
-    public class Range {
+    public static class Range {
+        private final int destinationRangeStart;
+        private final int sourceRangeStart;
+        private final int rangeLength;
+
         public Range(int destinationRangeStart,
                      int sourceRangeStart,
                      int rangeLength) {
+            this.destinationRangeStart = destinationRangeStart;
+            this.sourceRangeStart = sourceRangeStart;
+            this.rangeLength = rangeLength;
+        }
 
+        public boolean appliesTo(int value) {
+            return value >= sourceRangeStart
+                    && value < sourceRangeStart + rangeLength;
+        }
+
+        public int map(int from) {
+            return destinationRangeStart
+                    + (from - sourceRangeStart);
         }
     }
 }

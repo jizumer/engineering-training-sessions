@@ -39,4 +39,16 @@ class Day5Test {
         assertEquals(4, maps.get(2).getRanges().size());
     }
 
+    @Test
+    public void shouldMapCorrectlyFromSeedToSoil() throws IOException {
+        Day5.Map map = new Day5().loadAlmanac(SMALL_INPUT_PATH).getMaps().get(0);
+        assertEquals(50, map.map(98));
+        assertEquals(51, map.map(99));
+        assertEquals(52, map.map(50));
+        assertEquals(53, map.map(51));
+        assertEquals(54, map.map(52));
+        assertEquals(55, map.map(53));
+        assertEquals(10, map.map(10));
+    }
+
 }
