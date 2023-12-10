@@ -122,51 +122,45 @@ public class Day5Part2 {
             this.from = from;
             this.to = to;
             this.ranges = ranges;
+            this.ranges.sort(Range::compareTo);
         }
 
-        public String getFrom() {
-            return from;
-        }
-
-        public String getTo() {
-            return to;
-        }
-
-        public List<Range> getRanges() {
-            return ranges;
-        }
 
         public long map(long from) {
-            return ranges
-                    .stream()
-                    .filter(range -> range.appliesTo(from))
-                    .findAny()
-                    .map(range -> range.map(from))
-                    .orElse(from);
+
+            for (Range range : ranges) {
+                if (range.appliesTo(from)) {
+                    return range.map(from);
+                }
+            }
+            return from;
         }
     }
 
     public static class Range {
-        private final long destinationRangeStart;
-        private final long sourceRangeStart;
-        private final long rangeLength;
+        private final long upperLimit;
+        private final long lowerLimit;
+        private final long delta;
 
         public Range(long destinationRangeStart,
                      long sourceRangeStart,
                      long rangeLength) {
-            this.destinationRangeStart = destinationRangeStart;
-            this.sourceRangeStart = sourceRangeStart;
-            this.rangeLength = rangeLength;
+            this.lowerLimit = sourceRangeStart;
+            this.upperLimit = sourceRangeStart + rangeLength;
+            this.delta = destinationRangeStart - sourceRangeStart;
         }
 
         public boolean appliesTo(long value) {
-            return value >= sourceRangeStart
-                    && value < sourceRangeStart + rangeLength;
+            return value >= lowerLimit
+                    && value < upperLimit;
         }
 
         public long map(long from) {
-            return destinationRangeStart
-                    + (from - sourceRangeStart);
+            return from + delta;
+        }
+
+        public static int compareTo(Range a, Range b) {
+            return Long.compare(a.lowerLimit, b.lowerLimit);
         }
     }
 }
