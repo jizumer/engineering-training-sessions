@@ -50,4 +50,13 @@ public class Day6 {
     private static int measure(int timeHoldingButton, int time) {
         return timeHoldingButton * (time - timeHoldingButton);
     }
+
+    public static int calculateMultOfPossibleWays(String file) throws IOException {
+        return loadInputFile(file)
+                .entrySet()
+                .stream()
+                .mapToInt(entry -> calculatePossibleWaysToWin(entry.getKey(), entry.getValue()))
+                .reduce((a, b) -> a * b)
+                .orElseThrow();
+    }
 }

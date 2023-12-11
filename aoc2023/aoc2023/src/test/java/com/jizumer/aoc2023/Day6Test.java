@@ -29,4 +29,12 @@ class Day6Test {
                 Day6.calculatePossibleWaysToWin(30, 200));
     }
 
+    @Test
+    public void shouldCalculateMultOfPossibleWays() throws IOException {
+        assertEquals(288,
+                Day6.calculateMultOfPossibleWays("src/test/resources/day6-input-small.txt"));
+        assertEquals(32076,
+                Day6.calculateMultOfPossibleWays("src/test/resources/day6-input.txt"));
+    }
+
 }
