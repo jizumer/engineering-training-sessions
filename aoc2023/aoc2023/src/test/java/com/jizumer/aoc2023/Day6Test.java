@@ -5,7 +5,7 @@ import org.junit.jupiter.api.Test;
 import java.io.IOException;
 import java.util.Map;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class Day6Test {
 
@@ -20,7 +20,7 @@ class Day6Test {
     }
 
     @Test
-    public void shouldCalculatePossibleWaysToWin(){
+    public void shouldCalculatePossibleWaysToWin() {
         assertEquals(4,
                 Day6.calculatePossibleWaysToWin(7, 9));
         assertEquals(8,
@@ -35,6 +35,14 @@ class Day6Test {
                 Day6.calculateMultOfPossibleWays("src/test/resources/day6-input-small.txt"));
         assertEquals(32076,
                 Day6.calculateMultOfPossibleWays("src/test/resources/day6-input.txt"));
+    }
+
+    @Test
+    public void shouldCalculateMultOfPossibleWaysMergingRaces() throws IOException {
+        assertEquals(71503,
+                Day6.calculateMultOfPossibleWaysMergingRaces("src/test/resources/day6-input-small.txt"));
+        assertEquals(34278221,
+                Day6.calculateMultOfPossibleWaysMergingRaces("src/test/resources/day6-input.txt"));
     }
 
 }

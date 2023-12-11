@@ -36,7 +36,7 @@ public class Day6 {
 
     }
 
-    public static int calculatePossibleWaysToWin(int time, int distance) {
+    public static int calculatePossibleWaysToWin(long time, long distance) {
         int ways = 0;
         for (int timeHoldingButton = 0; timeHoldingButton < time; timeHoldingButton++) {
 
@@ -47,7 +47,7 @@ public class Day6 {
         return ways;
     }
 
-    private static int measure(int timeHoldingButton, int time) {
+    private static long measure(long timeHoldingButton, long time) {
         return timeHoldingButton * (time - timeHoldingButton);
     }
 
@@ -58,5 +58,28 @@ public class Day6 {
                 .mapToInt(entry -> calculatePossibleWaysToWin(entry.getKey(), entry.getValue()))
                 .reduce((a, b) -> a * b)
                 .orElseThrow();
+    }
+
+    public static int calculateMultOfPossibleWaysMergingRaces(String file) throws IOException {
+        long[] raceParameters = loadInputFileMergingRaces(file);
+        return calculatePossibleWaysToWin(raceParameters[0], raceParameters[1]);
+
+
+    }
+
+    private static long[] loadInputFileMergingRaces(String file) throws IOException {
+        BufferedReader br = new BufferedReader(
+                new FileReader(file));
+        long time = Long.parseLong(
+                br.readLine()
+                        .substring(5)
+                        .replace(" ", ""));
+
+        long distance = Long.parseLong(
+                br.readLine()
+                        .substring(9)
+                        .replace(" ", ""));
+        return new long[]{time, distance};
+
     }
 }
