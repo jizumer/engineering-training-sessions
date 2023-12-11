@@ -28,7 +28,7 @@ class Day5Part2Test {
 
     @Test
     public void shouldCalculateTheRightLowestLocationNumberForTheBigInput() throws IOException {
-        assertEquals(46L, new Day5Part2()
+        assertEquals(15880236L, new Day5Part2()
                 .loadAlmanac("src/test/resources/day5-input.txt")
                 .calculateLowestLocation());
     }

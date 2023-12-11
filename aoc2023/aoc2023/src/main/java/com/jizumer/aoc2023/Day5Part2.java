@@ -34,11 +34,6 @@ public class Day5Part2 {
             this.maps = new ArrayList<>();
 
             while (reader.ready()) {
-                String[] fromTo = reader.readLine().split("-");
-                String from = fromTo[0].trim();
-                String to = fromTo[2]
-                        .trim()
-                        .split(" ")[0];
 
                 List<Range> ranges = new ArrayList<>();
 
@@ -53,7 +48,7 @@ public class Day5Part2 {
                             parseLong(rangeValues[2])));
                 }
 
-                this.maps.add(new Map(from, to, ranges));
+                this.maps.add(new Map(ranges));
             }
 
             reader.close();
@@ -75,19 +70,23 @@ public class Day5Part2 {
         public Stream<Long> getSeedRanges() {
 
             return this.seedRanges
-                    .stream()
+                    .parallelStream()
                     .map(seedRange -> LongStream.range(seedRange.getStart(),
                             seedRange.getStart() + seedRange.getLength()))
-                    .flatMap(LongStream::boxed);
+                    .flatMapToLong(longStream -> longStream)
+                    .boxed();
 
         }
 
         public long calculateLowestLocation() {
             return getSeedRanges()
-                    .map(this::applyMaps).min(Long::compareTo).orElseThrow();
+                    .parallel()
+                    .map(this::applyMaps)
+                    .min(Long::compareTo)
+                    .orElseThrow();
         }
 
-        private long applyMaps(Long seed) {
+        private Long applyMaps(Long seed) {
             for (Map map : maps) {
                 seed = map.map(seed);
             }
@@ -114,13 +113,9 @@ public class Day5Part2 {
     }
 
     public static class Map {
-        private final String from;
-        private final String to;
         private final List<Range> ranges;
 
-        public Map(String from, String to, List<Range> ranges) {
-            this.from = from;
-            this.to = to;
+        public Map(List<Range> ranges) {
             this.ranges = ranges;
             this.ranges.sort(Range::compareTo);
         }
