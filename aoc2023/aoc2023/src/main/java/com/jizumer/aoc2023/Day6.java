@@ -9,7 +9,7 @@ import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 public class Day6 {
-    public Map<Integer, Integer> loadInputFile(String inputFilePath) throws IOException {
+    public static Map<Integer, Integer> loadInputFile(String inputFilePath) throws IOException {
         BufferedReader br = new BufferedReader(
                 new FileReader(inputFilePath));
         int[] times = Arrays.stream(br.readLine()
@@ -34,5 +34,20 @@ public class Day6 {
                 .boxed()
                 .collect(Collectors.toMap(i -> times[i], i -> distances[i]));
 
+    }
+
+    public static int calculatePossibleWaysToWin(int time, int distance) {
+        int ways = 0;
+        for (int timeHoldingButton = 0; timeHoldingButton < time; timeHoldingButton++) {
+
+            if (measure(timeHoldingButton, time) > distance) {
+                ways++;
+            }
+        }
+        return ways;
+    }
+
+    private static int measure(int timeHoldingButton, int time) {
+        return timeHoldingButton * (time - timeHoldingButton);
     }
 }

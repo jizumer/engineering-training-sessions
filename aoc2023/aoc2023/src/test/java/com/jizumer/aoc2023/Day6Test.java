@@ -16,7 +16,17 @@ class Day6Test {
                         80, 1581,
                         65, 1050,
                         72, 1102),
-                new Day6().loadInputFile("src/test/resources/day6-input.txt"));
+                Day6.loadInputFile("src/test/resources/day6-input.txt"));
+    }
+
+    @Test
+    public void shouldCalculatePossibleWaysToWin(){
+        assertEquals(4,
+                Day6.calculatePossibleWaysToWin(7, 9));
+        assertEquals(8,
+                Day6.calculatePossibleWaysToWin(15, 40));
+        assertEquals(9,
+                Day6.calculatePossibleWaysToWin(30, 200));
     }
 
 }
