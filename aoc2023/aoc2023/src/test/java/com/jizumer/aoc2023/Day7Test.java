@@ -19,4 +19,16 @@ class Day7Test {
                         new Day7.Hand("QQQJA", 483L)),
                 new Day7().loadHandsFromFile("src/test/resources/day7-input-small.txt"));
     }
+
+
+    @Test
+    public void shouldCalculateTotalWinnings() throws FileNotFoundException {
+        assertEquals(6440L, new Day7().calculateTotalWinnings("src/test/resources/day7-input-small.txt"));
+    }
+
+    @Test
+    public void shouldCalculateStrengthForAGivenHand() {
+        assertEquals(3, new Day7.Hand("KTJJT", 220L).calculateStrength());
+    }
+
 }
