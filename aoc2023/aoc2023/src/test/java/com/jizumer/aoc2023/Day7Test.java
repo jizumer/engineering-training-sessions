@@ -20,6 +20,21 @@ class Day7Test {
                 new Day7().loadHandsFromFile("src/test/resources/day7-input-small.txt"));
     }
 
+    @Test
+    public void shouldCompareHands() {
+        assertTrue(new Day7.Hand("AAAAA", 1L).compareTo(new Day7.Hand("AA8AA", 1L)) > 0);
+        assertTrue(new Day7.Hand("AA8AA", 1L).compareTo(new Day7.Hand("23332", 1L)) > 0);
+        assertTrue(new Day7.Hand("23332", 1L).compareTo(new Day7.Hand("TTT98", 1L)) > 0);
+        assertTrue(new Day7.Hand("TTT98", 1L).compareTo(new Day7.Hand("23432", 1L)) > 0);
+        assertTrue(new Day7.Hand("23432", 1L).compareTo(new Day7.Hand("A23A4", 1L)) > 0);
+        assertTrue(new Day7.Hand("A23A4", 1L).compareTo(new Day7.Hand("23456", 1L)) > 0);
+
+        assertTrue(new Day7.Hand("23456", 1L).compareTo(new Day7.Hand("23456", 1L)) == 0);
+
+        assertTrue(new Day7.Hand("33332", 1L).compareTo(new Day7.Hand("2AAAA", 1L)) > 0);
+        assertTrue(new Day7.Hand("77788", 1L).compareTo(new Day7.Hand("77888", 1L)) < 0);
+    }
+
 
     @Test
     public void shouldCalculateTotalWinnings() throws FileNotFoundException {
