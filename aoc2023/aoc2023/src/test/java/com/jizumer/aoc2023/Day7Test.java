@@ -58,4 +58,9 @@ class Day7Test {
         assertEquals(3, new Day7.Hand("KTJJT", 220L).calculateStrength());
     }
 
+    @Test
+    public void shouldCalculateTotalWinningsWithALargeInput() throws FileNotFoundException {
+        assertEquals(6440L, new Day7().calculateTotalWinnings("src/test/resources/day7-input.txt"));
+    }
+
 }

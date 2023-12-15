@@ -12,11 +12,11 @@ import java.util.concurrent.atomic.AtomicInteger;
 public class Day7 {
     public long calculateTotalWinnings(String filePath) throws FileNotFoundException {
         List<Hand> hands = loadHandsFromFile(filePath);
-        hands.forEach(System.out::println);
+
         hands.stream().sorted(Hand::compareTo).forEach(System.out::println);
 
         AtomicInteger runner = new AtomicInteger(0);
-        return hands.parallelStream()
+        return hands.stream()
                 .sorted(Hand::compareTo)
                 .mapToLong(Hand::getBid)
                 .map(bid -> bid * runner.incrementAndGet())
