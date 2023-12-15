@@ -130,7 +130,7 @@ public class Day7 {
                     // Five of a kind
                     return 7;
                 case 2:
-                    if (structure.get(0) == 4) {
+                    if (getBiggestGroup(structure) == 4) {
                         // Four of a kind
                         return 6;
                     } else {
@@ -138,7 +138,7 @@ public class Day7 {
                         return 5;
                     }
                 case 3:
-                    if (structure.get(0) == 3) {
+                    if (getBiggestGroup(structure) == 3) {
                         // Three of a kind
                         return 4;
                     } else {
@@ -152,6 +152,13 @@ public class Day7 {
                     // High card
                     return 1;
             }
+        }
+
+        private int getBiggestGroup(List<Integer> structure) {
+            return structure
+                    .stream()
+                    .max(Integer::compareTo)
+                    .orElseThrow();
         }
     }
 

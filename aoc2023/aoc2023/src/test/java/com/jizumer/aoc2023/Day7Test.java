@@ -35,6 +35,18 @@ class Day7Test {
         assertTrue(new Day7.Hand("77788", 1L).compareTo(new Day7.Hand("77888", 1L)) < 0);
     }
 
+    @Test
+    public void shouldCalculateHandsStrength() {
+        assertEquals(7, new Day7.Hand("AAAAA", 1L).calculateStrength());
+        assertEquals(6, new Day7.Hand("AA8AA", 1L).calculateStrength());
+        assertEquals(5, new Day7.Hand("23332", 1L).calculateStrength());
+        assertEquals(4, new Day7.Hand("T55J5", 1L).calculateStrength());
+        assertEquals(4, new Day7.Hand("TTT98", 1L).calculateStrength());
+        assertEquals(3, new Day7.Hand("23432", 1L).calculateStrength());
+        assertEquals(2, new Day7.Hand("A23A4", 1L).calculateStrength());
+        assertEquals(1, new Day7.Hand("23456", 1L).calculateStrength());
+    }
+
 
     @Test
     public void shouldCalculateTotalWinnings() throws FileNotFoundException {
