@@ -29,4 +29,18 @@ class Day8Test {
         int result = day8.calculateSteps("src/test/resources/day8-input-small.txt");
         assertEquals(6, result);
     }
+
+    @Test
+    public void shouldCalculateStepsInGhostMode() throws Exception {
+        Day8 day8 = new Day8();
+        int result = day8.calculateStepsInGhostMode("src/test/resources/day8-ghost-input.txt");
+        assertEquals(6, result);
+    }
+
+    @Test
+    public void shouldCalculateStepsInGhostModeForALargeInput() throws Exception {
+        Day8 day8 = new Day8();
+        int result = day8.calculateStepsInGhostMode("src/test/resources/day8-input.txt");
+        assertEquals(4, result);
+    }
 }

@@ -3,10 +3,7 @@ package com.jizumer.aoc2023;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class Day8 {
 
@@ -18,6 +15,46 @@ public class Day8 {
         loadInstructionsMap(filePath);
 
         return traverseMap();
+    }
+
+    public int calculateStepsInGhostMode(String s) throws IOException {
+        loadInstructionsMap(s);
+        return traverseMapInGhostMode();
+    }
+
+    private int traverseMapInGhostMode() {
+
+        int steps = 0;
+        int instruction = 0;
+        String[] currents = findAllInitialNodes();
+        while (!reachedDestination(currents)) {
+            for (int i = 0; i < currents.length; i++) {
+                makeStep(currents, instruction, i);
+            }
+            instruction = (instruction + 1) % instructions.size();
+            steps++;
+        }
+        return steps;
+    }
+
+    private String[] findAllInitialNodes() {
+        return map.keySet()
+                .stream()
+                .filter(s -> s.charAt(2) == 'A')
+                .toArray(String[]::new);
+    }
+
+    private boolean reachedDestination(String[] currents) {
+        return Arrays.stream(currents)
+                .allMatch(s -> s.charAt(2) == ('Z'));
+    }
+
+    private void makeStep(String[] currents, int instruction, int node) {
+        currents[node] = map
+                .get(currents[node])
+                [instructions
+                .get(instruction)
+                .ordinal()];
     }
 
     private int traverseMap() {
@@ -60,6 +97,7 @@ public class Day8 {
 
         reader.close();
     }
+
 
 }
 
