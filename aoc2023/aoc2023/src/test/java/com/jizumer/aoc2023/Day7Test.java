@@ -5,7 +5,8 @@ import org.junit.jupiter.api.Test;
 import java.io.FileNotFoundException;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class Day7Test {
 
@@ -40,7 +41,7 @@ class Day7Test {
         assertEquals(7, new Day7.Hand("AAAAA", 1L).calculateStrength());
         assertEquals(6, new Day7.Hand("AA8AA", 1L).calculateStrength());
         assertEquals(5, new Day7.Hand("23332", 1L).calculateStrength());
-        assertEquals(4, new Day7.Hand("T55J5", 1L).calculateStrength());
+        assertEquals(6, new Day7.Hand("T55J5", 1L).calculateStrength());
         assertEquals(4, new Day7.Hand("TTT98", 1L).calculateStrength());
         assertEquals(3, new Day7.Hand("23432", 1L).calculateStrength());
         assertEquals(2, new Day7.Hand("A23A4", 1L).calculateStrength());
@@ -50,17 +51,17 @@ class Day7Test {
 
     @Test
     public void shouldCalculateTotalWinnings() throws FileNotFoundException {
-        assertEquals(6440L, new Day7().calculateTotalWinnings("src/test/resources/day7-input-small.txt"));
+        assertEquals(5905, new Day7().calculateTotalWinnings("src/test/resources/day7-input-small.txt"));
     }
 
     @Test
     public void shouldCalculateStrengthForAGivenHand() {
-        assertEquals(3, new Day7.Hand("KTJJT", 220L).calculateStrength());
+        assertEquals(6, new Day7.Hand("KTJJT", 220L).calculateStrength());
     }
 
     @Test
     public void shouldCalculateTotalWinningsWithALargeInput() throws FileNotFoundException {
-        assertEquals(6440L, new Day7().calculateTotalWinnings("src/test/resources/day7-input.txt"));
+        assertEquals(250087440, new Day7().calculateTotalWinnings("src/test/resources/day7-input.txt"));
     }
 
 }

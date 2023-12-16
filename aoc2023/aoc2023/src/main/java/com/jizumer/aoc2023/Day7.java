@@ -3,10 +3,7 @@ package com.jizumer.aoc2023;
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class Day7 {
@@ -98,11 +95,11 @@ public class Day7 {
         }
 
         private static int labelToValue(char label) {
-            return label == 'T' ? 10
-                    : label == 'J' ? 11
-                    : label == 'Q' ? 12
-                    : label == 'K' ? 13
-                    : label == 'A' ? 14
+            return label == 'J' ? 1
+                    : label == 'T' ? 10
+                    : label == 'Q' ? 11
+                    : label == 'K' ? 12
+                    : label == 'A' ? 13
                     : Character.getNumericValue(label);
         }
 
@@ -111,26 +108,16 @@ public class Day7 {
 
             char[] cardsCopy = cards.clone();
             Arrays.sort(cardsCopy);
-            List<Integer> structure = new ArrayList<>();
-
-            int fragmentSize = 1;
-            for (int i = 1; i < cardsCopy.length; i++) {
-                if (cardsCopy[i] != cardsCopy[i - 1]) {
-                    structure.add(fragmentSize);
-                    fragmentSize = 1;
-
-                } else {
-                    fragmentSize++;
-                }
-            }
-            structure.add(fragmentSize);
+            applyJokerRule(cardsCopy);
+            Map<Character, Integer> structure =
+                    countCardsByGroups(cardsCopy);
 
             switch (structure.size()) {
                 case 1:
                     // Five of a kind
                     return 7;
                 case 2:
-                    if (getBiggestGroup(structure) == 4) {
+                    if (getBiggestGroup(structure).getValue() == 4) {
                         // Four of a kind
                         return 6;
                     } else {
@@ -138,7 +125,7 @@ public class Day7 {
                         return 5;
                     }
                 case 3:
-                    if (getBiggestGroup(structure) == 3) {
+                    if (getBiggestGroup(structure).getValue() == 3) {
                         // Three of a kind
                         return 4;
                     } else {
@@ -154,10 +141,49 @@ public class Day7 {
             }
         }
 
-        private int getBiggestGroup(List<Integer> structure) {
+        private static Map<Character, Integer> countCardsByGroups(char[] cardsCopy) {
+            Map<Character, Integer> structure =
+                    new HashMap<>();
+            new String(cardsCopy)
+                    .chars()
+                    .forEach(card ->
+                            structure.merge(
+                                    (char) card, 1, Integer::sum));
+            return structure;
+        }
+
+        private void applyJokerRule(char[] cardsCopy) {
+            if (new String(cardsCopy)
+                    .chars()
+                    .noneMatch(card -> card == 'J')) {
+                return;
+            }
+
+            if(Arrays.equals(new char[]{'J', 'J', 'J', 'J', 'J'}, cardsCopy)) {
+                Arrays.fill(cardsCopy, 'A');
+                return;
+            }
+
+            char characterToReplace
+                    = findCharacterToReplace(cardsCopy);
+            for (int i = 0; i < cardsCopy.length; i++) {
+                if (cardsCopy[i] == 'J') {
+                    cardsCopy[i] = characterToReplace;
+                }
+            }
+
+        }
+
+        private char findCharacterToReplace(char[] cardsCopy) {
+            return getBiggestGroup(countCardsByGroups(cardsCopy)).getKey();
+        }
+
+        private Map.Entry<Character, Integer> getBiggestGroup(Map<Character, Integer> structure) {
             return structure
+                    .entrySet()
                     .stream()
-                    .max(Integer::compareTo)
+                    .filter(entry -> entry.getKey() != 'J')
+                    .max(Map.Entry.comparingByValue())
                     .orElseThrow();
         }
     }
