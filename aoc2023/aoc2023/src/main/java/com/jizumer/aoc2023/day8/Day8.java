@@ -3,8 +3,13 @@ package com.jizumer.aoc2023.day8;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.math.BigInteger;
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ConcurrentMap;
 
 public class Day8 {
 
@@ -13,6 +18,9 @@ public class Day8 {
     private final Map<String, Node> network = new HashMap<>();
 
     private final Node[] currentNodes;
+
+    private final Node[] terminalNodes;
+
     private long steps = 0;
 
     public Day8(String filePath) throws IOException {
@@ -40,6 +48,7 @@ public class Day8 {
         reader.close();
 
         currentNodes = findAllInitialNodes();
+        terminalNodes = findAllTerminalNodes();
     }
 
     private void completeNetwork() {
@@ -83,35 +92,52 @@ public class Day8 {
     }
 
     public long traverseMapInGhostMode() {
-        startProgressLogger();
         int instructionsLimit = instructions.length;
         int instructionsRunner = 0;
 
-        while (!isFinished()) {
+        while (!allPeriodsAreCalculated()) {
 
             for (int i = 0; i < currentNodes.length; i++) {
-                currentNodes[i] = currentNodes[i].next(instructions[instructionsRunner]);
+                currentNodes[i] = currentNodes[i].next(instructions[instructionsRunner], steps);
             }
             instructionsRunner = (instructionsRunner + 1) % instructionsLimit;
 
             steps++;
         }
-        return steps;
+
+        return calculateLcm();
     }
 
-    private void startProgressLogger() {
-        Runnable r = () -> {
-            while (!Thread.currentThread().isInterrupted()) {
-                System.out.println("steps: " + this.steps);
-                try {
-                    Thread.sleep(10000);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
+    private long calculateLcm() {
+        return Arrays.stream(terminalNodes)
+                .parallel()
+                .map(Node::getPeriod)
+                .map(BigInteger::valueOf)
+                .reduce(this::lcm)
+                .map(BigInteger::longValue)
+                .orElseThrow(() -> new RuntimeException("Error calculating LCM"));
+
+    }
+
+    private BigInteger lcm(BigInteger... values) {
+        if (values.length == 0)
+            return BigInteger.ONE;
+        BigInteger lcm = values[0];
+        for (int i = 1; i < values.length; i++) {
+            if (values[i].signum() != 0) {
+                final BigInteger gcd = lcm.gcd(values[i]);
+                if (gcd.equals(BigInteger.ONE)) {
+                    lcm = lcm.multiply(values[i]);
+                } else {
+                    if (!values[i].equals(gcd)) {
+                        lcm = lcm.multiply(values[i].divide(gcd));
+                    }
                 }
             }
-        };
-        new Thread(r).start();
+        }
+        return lcm;
     }
+
 
     private Node[] findAllInitialNodes() {
         return network.values()
@@ -121,13 +147,19 @@ public class Day8 {
                 .toArray(Node[]::new);
     }
 
-    private Boolean isFinished() {
-        for (Node node : currentNodes) {
-            if (!node.isTerminal()) {
-                return false;
-            }
-        }
-        return true;
+    private Node[] findAllTerminalNodes() {
+        return network.values()
+                .stream()
+                .parallel()
+                .filter(Node::isTerminal)
+                .toArray(Node[]::new);
+    }
+
+    private Boolean allPeriodsAreCalculated() {
+        return Arrays.stream(this.terminalNodes)
+                .parallel()
+                .map(Node::getPeriod)
+                .noneMatch(period -> period == 0);
     }
 
 }

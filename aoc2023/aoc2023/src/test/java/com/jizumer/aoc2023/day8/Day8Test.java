@@ -25,7 +25,7 @@ class Day8Test {
     @Test
     public void shouldCalculateStepsInGhostModeForALargeInput() throws Exception {
         Day8 day8 = new Day8("src/test/resources/day8-input.txt");
-        assertEquals(6L, day8.traverseMapInGhostMode());
+        assertEquals(10818234074807L, day8.traverseMapInGhostMode());
     }
 
 }

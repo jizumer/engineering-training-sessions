@@ -11,6 +11,10 @@ public class Node {
     private final Boolean initial;
     private final Boolean terminal;
 
+    private long lastVistingStep = 0;
+
+    private long period = 0;
+
     public Node(String label, String leftLabel, String rightLabel) {
         this.label = label;
         this.leftLabel = leftLabel;
@@ -53,11 +57,30 @@ public class Node {
         return left == null && right == null;
     }
 
-    public Node next(Direction direction) {
+    public Node next(Direction direction, long step) {
+        Node next;
         if (direction == Direction.L) {
-            return left;
+            next = left;
         } else
-            return right;
+            next = right;
 
+        if (next.isTerminal()) {
+
+            if (next.lastVistingStep == 0) {
+                next.lastVistingStep = step;
+            } else {
+                long nextNewPeriod = step - next.lastVistingStep;
+                next.lastVistingStep = step;
+                next.period = nextNewPeriod;
+            }
+
+        }
+
+        return next;
     }
+
+    public long getPeriod() {
+        return period;
+    }
+
 }
