@@ -3,11 +3,8 @@ package com.jizumer.aoc2023.day8;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.concurrent.atomic.AtomicInteger;
-import java.util.stream.IntStream;
 
 public class Day8 {
 
@@ -16,6 +13,7 @@ public class Day8 {
     private final Map<String, Node> network = new HashMap<>();
 
     private final Node[] currentNodes;
+    private long steps = 0;
 
     public Day8(String filePath) throws IOException {
         BufferedReader reader = new BufferedReader(new FileReader(filePath));
@@ -31,6 +29,14 @@ public class Day8 {
 
         completeNetwork();
         System.out.println("Network size: " + network.size() + " nodes.");
+        System.out.println("Initial nodes: " + network.values()
+                .stream()
+                .filter(Node::isInitial)
+                .count());
+        System.out.println("Terminal nodes: " + network.values()
+                .stream()
+                .filter(Node::isTerminal)
+                .count());
         reader.close();
 
         currentNodes = findAllInitialNodes();
@@ -76,19 +82,35 @@ public class Day8 {
                 .toArray(Direction[]::new);
     }
 
-    public Long traverseMapInGhostMode() {
-
+    public long traverseMapInGhostMode() {
+        startProgressLogger();
         int instructionsLimit = instructions.length;
+        int instructionsRunner = 0;
 
-        AtomicInteger instructionRunner = new AtomicInteger(0);
-        int steps = IntStream.generate(() -> instructionRunner
-                        .getAndIncrement() % instructionsLimit)
-                .mapToObj(instruction -> instructions[instruction])
-                .filter(this::makeStep)
-                .findFirst()
-                .get()
-                .ordinal();
-        return (long) steps;
+        while (!isFinished()) {
+
+            for (int i = 0; i < currentNodes.length; i++) {
+                currentNodes[i] = currentNodes[i].next(instructions[instructionsRunner]);
+            }
+            instructionsRunner = (instructionsRunner + 1) % instructionsLimit;
+
+            steps++;
+        }
+        return steps;
+    }
+
+    private void startProgressLogger() {
+        Runnable r = () -> {
+            while (!Thread.currentThread().isInterrupted()) {
+                System.out.println("steps: " + this.steps);
+                try {
+                    Thread.sleep(10000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        };
+        new Thread(r).start();
     }
 
     private Node[] findAllInitialNodes() {
@@ -99,13 +121,13 @@ public class Day8 {
                 .toArray(Node[]::new);
     }
 
-    private Boolean makeStep(Direction direction) {
-        for (int i = 0; i < currentNodes.length; i++) {
-            currentNodes[i] = currentNodes[i].next(direction);
+    private Boolean isFinished() {
+        for (Node node : currentNodes) {
+            if (!node.isTerminal()) {
+                return false;
+            }
         }
-
-        return Arrays.stream(currentNodes)
-                .allMatch(Node::isTerminal);
+        return true;
     }
 
 }

@@ -54,14 +54,10 @@ public class Node {
     }
 
     public Node next(Direction direction) {
-        switch (direction) {
-            case L -> {
-                return left;
-            }
-            case R -> {
-                return right;
-            }
-            default -> throw new RuntimeException("Invalid direction.");
-        }
+        if (direction == Direction.L) {
+            return left;
+        } else
+            return right;
+
     }
 }
