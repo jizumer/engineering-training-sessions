@@ -2,6 +2,8 @@ package com.jizumer.aoc2023;
 
 import org.junit.jupiter.api.Test;
 
+import java.math.BigInteger;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 class Day8Test {
@@ -33,14 +35,14 @@ class Day8Test {
     @Test
     public void shouldCalculateStepsInGhostMode() throws Exception {
         Day8 day8 = new Day8();
-        int result = day8.calculateStepsInGhostMode("src/test/resources/day8-ghost-input.txt");
-        assertEquals(6, result);
+        BigInteger result = day8.calculateStepsInGhostMode("src/test/resources/day8-ghost-input.txt");
+        assertEquals(BigInteger.valueOf(6), result);
     }
 
     @Test
     public void shouldCalculateStepsInGhostModeForALargeInput() throws Exception {
         Day8 day8 = new Day8();
-        int result = day8.calculateStepsInGhostMode("src/test/resources/day8-input.txt");
-        assertEquals(4, result);
+        BigInteger result = day8.calculateStepsInGhostMode("src/test/resources/day8-input.txt");
+        assertEquals(BigInteger.valueOf(256), result);
     }
 }
