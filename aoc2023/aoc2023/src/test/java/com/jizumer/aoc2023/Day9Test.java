@@ -16,4 +16,11 @@ class Day9Test {
                         .count());
     }
 
+    @Test
+    public void shouldFindNextValueForHistory() {
+        assertEquals(18,
+                new Day9()
+                        .findNextValueForHistory(new Integer[]{0, 3, 6, 9, 12, 15}));
+    }
+
 }
