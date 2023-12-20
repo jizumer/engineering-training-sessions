@@ -29,6 +29,17 @@ public class Day9 {
 
     public int findNextValueForHistory(Integer[] history) {
 
+        List<Integer[]> sequences = generateSequences(history);
+
+        int delta = 0;
+        for (Integer[] sequence : sequences) {
+            delta += sequence[sequence.length - 1];
+        }
+        return delta;
+
+    }
+
+    private static List<Integer[]> generateSequences(Integer[] history) {
         List<Integer[]> sequences = new ArrayList<>();
         sequences.add(history);
 
@@ -43,18 +54,23 @@ public class Day9 {
         } while (!Arrays
                 .stream(sequenceRunner)
                 .allMatch(sequenceRunner[0]::equals));
-
-        int delta = 0;
-        for (Integer[] sequence : sequences) {
-            delta += sequence[sequence.length - 1];
-        }
-        return delta;
-
+        return sequences;
     }
 
     public int sumOfNextValuesOfEachHistory(String s) throws FileNotFoundException {
         return loadReportFromFile(s)
                 .map(this::findNextValueForHistory)
                 .reduce(0, Integer::sum);
+    }
+
+    public int findPreviousValueForHistory(Integer[] history) {
+
+        List<Integer[]> sequences = generateSequences(history);
+
+        int delta = 0;
+        for (int i = sequences.size() - 1; i >= 0; i--) {
+            delta = sequences.get(i)[0] - delta;
+        }
+        return delta;
     }
 }

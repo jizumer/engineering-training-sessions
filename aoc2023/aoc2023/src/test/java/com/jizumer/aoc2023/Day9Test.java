@@ -27,6 +27,19 @@ class Day9Test {
     }
 
     @Test
+    public void shouldFindPreviousValueForHistory() {
+        assertEquals(-3,
+                new Day9()
+                        .findPreviousValueForHistory(new Integer[]{0, 3, 6, 9, 12, 15}));
+        assertEquals(0,
+                new Day9()
+                        .findPreviousValueForHistory(new Integer[]{1, 3, 6, 10, 15, 21}));
+        assertEquals(5,
+                new Day9()
+                        .findPreviousValueForHistory(new Integer[]{10 ,13, 16, 21, 30, 45}));
+    }
+
+    @Test
     public void shouldCalculateTheSumOfTheNextValueOfEachHistory() throws FileNotFoundException {
         assertEquals(114,
                 new Day9()
@@ -39,5 +52,7 @@ class Day9Test {
                 new Day9()
                         .sumOfNextValuesOfEachHistory("src/test/resources/day9-input.txt"));
     }
+
+
 
 }
