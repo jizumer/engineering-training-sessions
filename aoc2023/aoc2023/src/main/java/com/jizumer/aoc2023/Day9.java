@@ -73,4 +73,10 @@ public class Day9 {
         }
         return delta;
     }
+
+    public int sumOfPreviousValuesOfEachHistory(String report) throws FileNotFoundException {
+        return loadReportFromFile(report)
+                .map(this::findPreviousValueForHistory)
+                .reduce(0, Integer::sum);
+    }
 }
