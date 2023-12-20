@@ -60,5 +60,12 @@ class Day9Test {
                         .sumOfPreviousValuesOfEachHistory("src/test/resources/day9-input-small.txt"));
     }
 
+    @Test
+    public void shouldCalculateTheSumOfThePreviousValueOfEachHistoryForTheBigInput() throws FileNotFoundException {
+        assertEquals(1022,
+                new Day9()
+                        .sumOfPreviousValuesOfEachHistory("src/test/resources/day9-input.txt"));
+    }
+
 
 }
