@@ -34,7 +34,7 @@ public class Day9 {
 
         Integer[] sequenceRunner = sequences.get(0);
         do {
-            Integer[] nextSequence = new Integer[history.length - 1];
+            Integer[] nextSequence = new Integer[sequenceRunner.length - 1];
             for (int i = 0; i < sequenceRunner.length - 1; i++) {
                 nextSequence[i] = sequenceRunner[i + 1] - sequenceRunner[i];
             }
@@ -50,5 +50,11 @@ public class Day9 {
         }
         return delta;
 
+    }
+
+    public int sumOfNextValuesOfEachHistory(String s) throws FileNotFoundException {
+        return loadReportFromFile(s)
+                .map(this::findNextValueForHistory)
+                .reduce(0, Integer::sum);
     }
 }

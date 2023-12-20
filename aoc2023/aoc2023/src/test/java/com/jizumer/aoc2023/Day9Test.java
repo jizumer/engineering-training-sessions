@@ -21,6 +21,23 @@ class Day9Test {
         assertEquals(18,
                 new Day9()
                         .findNextValueForHistory(new Integer[]{0, 3, 6, 9, 12, 15}));
+        assertEquals(28,
+                new Day9()
+                        .findNextValueForHistory(new Integer[]{1, 3, 6, 10, 15, 21}));
+    }
+
+    @Test
+    public void shouldCalculateTheSumOfTheNextValueOfEachHistory() throws FileNotFoundException {
+        assertEquals(114,
+                new Day9()
+                        .sumOfNextValuesOfEachHistory("src/test/resources/day9-input-small.txt"));
+    }
+
+    @Test
+    public void shouldCalculateTheSumOfTheNextValueOfEachHistoryForTheBigInput() throws FileNotFoundException {
+        assertEquals(1868368343,
+                new Day9()
+                        .sumOfNextValuesOfEachHistory("src/test/resources/day9-input.txt"));
     }
 
 }
