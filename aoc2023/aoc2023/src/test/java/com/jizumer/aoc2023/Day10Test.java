@@ -1,9 +1,9 @@
 package com.jizumer.aoc2023;
 
+import com.jizumer.aoc2023.day10.Day10;
 import org.junit.jupiter.api.Test;
 
 import java.io.FileNotFoundException;
-import java.util.Arrays;
 
 import static org.junit.jupiter.api.Assertions.*;
 

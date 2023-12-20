@@ -1,8 +1,9 @@
-package com.jizumer.aoc2023;
+package com.jizumer.aoc2023.day10;
 
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.util.Arrays;
 
 public class Day10 {
     public int[][] loadMapFromFile(final String mapFilePath) throws FileNotFoundException {
@@ -16,10 +17,26 @@ public class Day10 {
     }
 
     public int getFurthestNumberOfSteps(int[][] map) {
-        int[] runnerA = findStartingPoint(map);
-        int[] runnerB = runnerA.clone();
+        int[] initialPoint = findStartingPoint(map);
+        PipeRunner[] runners = PipeRunner.locateRunnersStartingPoints(map, initialPoint);
+        PipeRunner runnerA = runners[0];
+        PipeRunner runnerB = runners[1];
 
-        throw new RuntimeException("Not implemented yet");
+        int steps = 0;
+        do {
+            move(runnerA, map);
+            move(runnerB, map);
+            steps++;
+        } while (!isSamePosition(runnerA, runnerB));
+        return steps;
+    }
+
+    private boolean isSamePosition(int[] runnerA, int[] runnerB) {
+        return Arrays.equals(runnerA, runnerB);
+    }
+
+    private void move(int[] runner, int[][] map) {
+
     }
 
     public int[] findStartingPoint(int[][] map) {
