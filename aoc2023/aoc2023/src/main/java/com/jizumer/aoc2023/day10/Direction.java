@@ -1,8 +1,8 @@
 package com.jizumer.aoc2023.day10;
 
 public enum Direction {
-    NORTH(1, 0),
-    SOUTH(-1, 0),
+    NORTH(-1, 0),
+    SOUTH(1, 0),
     EAST(0, 1),
     WEST(0, -1);
 
@@ -15,22 +15,15 @@ public enum Direction {
     }
 
     public static Direction[] getPossibleDirectionsByPipe(int pipe) {
-        switch (pipe) {
-            case '|':
-                return new Direction[]{NORTH, SOUTH};
-            case '-':
-                return new Direction[]{EAST, WEST};
-            case 'L':
-                return new Direction[]{NORTH, EAST};
-            case 'J':
-                return new Direction[]{NORTH, WEST};
-            case '7':
-                return new Direction[]{SOUTH, WEST};
-            case 'F':
-                return new Direction[]{SOUTH, EAST};
-            default:
-                throw new RuntimeException("Invalid pipe");
-        }
+        return switch (pipe) {
+            case '|' -> new Direction[]{NORTH, SOUTH};
+            case '-' -> new Direction[]{EAST, WEST};
+            case 'L' -> new Direction[]{NORTH, EAST};
+            case 'J' -> new Direction[]{NORTH, WEST};
+            case '7' -> new Direction[]{SOUTH, WEST};
+            case 'F' -> new Direction[]{SOUTH, EAST};
+            default -> throw new RuntimeException("Invalid pipe");
+        };
     }
 
     public int getRowIncrement() {
