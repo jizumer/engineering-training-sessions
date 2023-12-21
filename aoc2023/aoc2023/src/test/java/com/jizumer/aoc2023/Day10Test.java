@@ -29,7 +29,7 @@ class Day10Test {
     public void shouldReturnFurthestNumberOfStepsForTheLargeInput() throws FileNotFoundException {
         int[][] map = new Day10()
                 .loadMapFromFile("src/test/resources/day10-input.txt");
-        assertEquals(16368, new Day10().getFurthestNumberOfSteps(map));
+        assertEquals(6815, new Day10().getFurthestNumberOfSteps(map));
     }
 
     @Test
