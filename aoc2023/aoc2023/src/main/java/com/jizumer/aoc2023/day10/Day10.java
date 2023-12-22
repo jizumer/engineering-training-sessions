@@ -95,7 +95,7 @@ public class Day10 {
         int[] currentPosition = new int[]{i, j};
         int[] nextPosition;
         do {
-            nextPosition = getNextPosition(currentPosition);
+            nextPosition = getNextPosition(currentPosition, Direction.EAST);
             if (loop[nextPosition[0]][nextPosition[1]] == 1) {
                 numberOfTimesCrossed++;
             }
@@ -112,9 +112,14 @@ public class Day10 {
         return i == 0 || j == 0 || i == map.length - 1 || j == map[0].length - 1;
     }
 
-    private int[] getNextPosition(int[] currentPosition) {
+    private int[] getNextPosition(int[] currentPosition, Direction direction) {
         //we will trace a path to the border of the map towards the right, and count how many times it crosses the loop.
         // If it crosses the loop an odd number of times, it means that the tile is enclosed by the loop.
-        return new int[]{currentPosition[0], currentPosition[1] + 1};
+        return switch (direction) {
+            case NORTH -> new int[]{currentPosition[0] - 1, currentPosition[1]};
+            case SOUTH -> new int[]{currentPosition[0] + 1, currentPosition[1]};
+            case WEST -> new int[]{currentPosition[0], currentPosition[1] - 1};
+            case EAST -> new int[]{currentPosition[0], currentPosition[1] + 1};
+        };
     }
 }
