@@ -75,9 +75,9 @@ public class Day10 {
 
         for (int i = 0; i < map.length; i++) {
             for (int j = 0; j < map[0].length; j++) {
-                if (isBorder(new int[]{i, j})) {
-                    numberOfTilesEnclosedByTheLoop++;
-                } else if (loop[i][j] == 0 && isEnclosed(i, j)) {
+                if (loop[i][j] == 0
+                        && !isBorder(i, j)
+                        && isEnclosed(i, j)) {
                     numberOfTilesEnclosedByTheLoop++;
                 }
             }
@@ -100,16 +100,16 @@ public class Day10 {
                 numberOfTimesCrossed++;
             }
             currentPosition = nextPosition;
-        } while (!isBorder(nextPosition));
+        } while (!isBorder(nextPosition[0], nextPosition[1]));
 
+        System.out.println("Position: " + i + "," + j + " crosses the loop "
+                + numberOfTimesCrossed + " times, so it is " + (numberOfTimesCrossed % 2 == 1 ? "enclosed"
+                : "not enclosed") + ".");
         return numberOfTimesCrossed % 2 == 1;
     }
 
-    private boolean isBorder(int[] position) {
-        return position[0] == 0
-                || position[0] == map.length - 1
-                || position[1] == 0
-                || position[1] == map[0].length - 1;
+    private boolean isBorder(int i, int j) {
+        return i == 0 || j == 0 || i == map.length - 1 || j == map[0].length - 1;
     }
 
     private int[] getNextPosition(int[] currentPosition) {
