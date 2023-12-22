@@ -24,4 +24,11 @@ class Day11Test {
         assertEquals(13, day11.getExpandedUniverse()[0].length);
     }
 
+    @Test
+    public void shouldSumDistancesBetweenGalaxies() throws FileNotFoundException {
+        Day11 day11 = new Day11();
+        day11.loadUniverseFromFile("src/test/resources/day11-input-small.txt");
+        assertEquals(374, day11.sumDistancesBetweenGalaxies());
+    }
+
 }

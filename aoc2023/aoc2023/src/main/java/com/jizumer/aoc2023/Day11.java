@@ -12,6 +12,8 @@ public class Day11 {
     private int[][] universe;
     private int[][] expandedUniverse;
 
+    private final List<int[]> galaxies = new ArrayList<>();
+
     public void loadUniverseFromFile(String path) throws FileNotFoundException {
         BufferedReader reader = new BufferedReader(new FileReader(path));
         universe = reader
@@ -20,6 +22,17 @@ public class Day11 {
                 .toArray(int[][]::new);
 
         expandUniverse();
+        findGalaxies();
+    }
+
+    private void findGalaxies() {
+        for (int i = 0; i < expandedUniverse.length; i++) {
+            for (int j = 0; j < expandedUniverse[i].length; j++) {
+                if (expandedUniverse[i][j] == '#') {
+                    galaxies.add(new int[]{i, j});
+                }
+            }
+        }
     }
 
     private void expandUniverse() {
@@ -101,5 +114,20 @@ public class Day11 {
 
     public int[][] getExpandedUniverse() {
         return expandedUniverse;
+    }
+
+    public int sumDistancesBetweenGalaxies() {
+
+        int sum = 0;
+        for (int i = 0; i < galaxies.size() - 1; i++) {
+            for (int j = i + 1; j < galaxies.size(); j++) {
+                sum += distanceBetweenGalaxies(galaxies.get(i), galaxies.get(j));
+            }
+        }
+        return sum;
+    }
+
+    private int distanceBetweenGalaxies(int[] galaxy1, int[] galaxy2) {
+        return Math.abs(galaxy1[0] - galaxy2[0]) + Math.abs(galaxy1[1] - galaxy2[1]);
     }
 }
