@@ -7,18 +7,22 @@ import java.util.Arrays;
 import java.util.List;
 
 public class Day10 {
+
+    private int[][] map;
+
     public int[][] loadMapFromFile(final String mapFilePath) throws FileNotFoundException {
         BufferedReader bufferedReader = new BufferedReader(new FileReader(
                 mapFilePath));
 
-        return bufferedReader
+        this.map = bufferedReader
                 .lines()
                 .map(line -> line.chars().toArray())
                 .toArray(int[][]::new);
+        return this.map;
     }
 
-    public int getFurthestNumberOfSteps(int[][] map) {
-        int[] initialPoint = findStartingPoint(map);
+    public int getFurthestNumberOfSteps() {
+        int[] initialPoint = findStartingPoint();
         List<PipeRunner> runners = PipeRunner.locateRunnersStartingPoints(map, initialPoint);
         PipeRunner runnerA = runners.get(0);
         PipeRunner runnerB = runners.get(1);
@@ -38,7 +42,7 @@ public class Day10 {
         return Arrays.equals(positionOfRunnerA, positionOfRunnerB);
     }
 
-    public int[] findStartingPoint(int[][] map) {
+    public int[] findStartingPoint() {
         for (int i = 0; i < map.length; i++) {
             for (int j = 0; j < map[0].length; j++) {
                 if (map[i][j] == (int) 'S') {
@@ -47,5 +51,9 @@ public class Day10 {
             }
         }
         throw new RuntimeException("No starting point found");
+    }
+
+    public int getNumberOfTilesEnclosedByTheLoop() {
+        throw new RuntimeException("Not implemented yet");
     }
 }
