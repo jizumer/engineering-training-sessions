@@ -29,10 +29,14 @@ public class PipeRunner {
     public static List<PipeRunner> locateRunnersStartingPoints(int[][] map, int[] initialPoint) {
         List<PipeRunner> runners = new ArrayList<>();
 
-        int northPipe = map[initialPoint[0] - 1][initialPoint[1]];
-        int westPipe = map[initialPoint[0]][initialPoint[1] - 1];
-        int southPipe = map[initialPoint[0] + 1][initialPoint[1]];
-        int eastPipe = map[initialPoint[0]][initialPoint[1] + 1];
+        int northPipe = initialPoint[0] == 0 ? 0 :
+                map[initialPoint[0] - 1][initialPoint[1]];
+        int westPipe = initialPoint[1] == 0 ? 0 :
+                map[initialPoint[0]][initialPoint[1] - 1];
+        int southPipe = initialPoint[0] == map.length - 1 ? 0 :
+                map[initialPoint[0] + 1][initialPoint[1]];
+        int eastPipe = initialPoint[1] == map[0].length - 1 ? 0 :
+                map[initialPoint[0]][initialPoint[1] + 1];
 
         if (northPipe == '|' || northPipe == '7' || northPipe == 'F') {
             runners.add(new PipeRunner(new int[]{initialPoint[0] - 1, initialPoint[1]}, initialPoint));
