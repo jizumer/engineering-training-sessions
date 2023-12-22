@@ -1,6 +1,7 @@
 package com.jizumer.aoc2023;
 
 import com.jizumer.aoc2023.day10.Day10;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 import java.io.FileNotFoundException;
@@ -52,6 +53,21 @@ class Day10Test {
         Day10 day10 = new Day10();
         day10.loadMapFromFile("src/test/resources/day10-part2-input-easy.txt");
         assertEquals(4, day10.getNumberOfTilesEnclosedByTheLoop());
+    }
+
+    @Test
+    public void shouldReturnNumberOfTilesEnclosedByTheLoopForTheMediumInput() throws FileNotFoundException {
+        Day10 day10 = new Day10();
+        day10.loadMapFromFile("src/test/resources/day10-part2-input-medium.txt");
+        assertEquals(4, day10.getNumberOfTilesEnclosedByTheLoop());
+    }
+
+    @Test
+    @Disabled
+    public void shouldReturnNumberOfTilesEnclosedByTheLoopForTheHardInput() throws FileNotFoundException {
+        Day10 day10 = new Day10();
+        day10.loadMapFromFile("src/test/resources/day10-part2-input-hard.txt");
+        assertEquals(8, day10.getNumberOfTilesEnclosedByTheLoop());
     }
 
 }
