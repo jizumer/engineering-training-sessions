@@ -67,7 +67,7 @@ public class PipeRunner {
         lastPosition = currentPosition;
         currentPosition = possibleNextPosition;
         currentPipe = (char) map[currentPosition[0]][currentPosition[1]];
-        System.out.println(this);
+
         return currentPosition;
     }
 

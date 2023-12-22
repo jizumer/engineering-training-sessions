@@ -11,6 +11,8 @@ public class Day10 {
     private int[][] map;
     private int[][] loop;
 
+    private int stepsToReachTheLoop;
+
     public int[][] loadMapFromFile(final String mapFilePath) throws FileNotFoundException {
 
         BufferedReader bufferedReader = new BufferedReader(new FileReader(
@@ -21,10 +23,15 @@ public class Day10 {
                 .map(line -> line.chars().toArray())
                 .toArray(int[][]::new);
         loop = new int[map.length][map[0].length];
+        traverseTheLoop();
         return this.map;
     }
 
     public int getFurthestNumberOfSteps() {
+        return stepsToReachTheLoop;
+    }
+
+    private void traverseTheLoop() {
         int[] initialPoint = findStartingPoint();
         List<PipeRunner> runners = PipeRunner.locateRunnersStartingPoints(map, initialPoint);
         PipeRunner runnerA = runners.get(0);
@@ -36,16 +43,15 @@ public class Day10 {
 
         int[] positionOfRunnerA;
         int[] positionOfRunnerB;
-        int steps = 1;
+        this.stepsToReachTheLoop = 1;
         do {
             positionOfRunnerA = runnerA.move(map);
             positionOfRunnerB = runnerB.move(map);
 
             loop[positionOfRunnerA[0]][positionOfRunnerA[1]] = 1;
             loop[positionOfRunnerB[0]][positionOfRunnerB[1]] = 1;
-            steps++;
+            stepsToReachTheLoop++;
         } while (!isSamePosition(positionOfRunnerA, positionOfRunnerB));
-        return steps;
     }
 
     private boolean isSamePosition(int[] positionOfRunnerA, int[] positionOfRunnerB) {
@@ -65,6 +71,50 @@ public class Day10 {
     }
 
     public int getNumberOfTilesEnclosedByTheLoop() {
-        throw new RuntimeException("Not implemented yet");
+        int numberOfTilesEnclosedByTheLoop = 0;
+
+        for (int i = 0; i < map.length; i++) {
+            for (int j = 0; j < map[0].length; j++) {
+                if (isBorder(new int[]{i, j})) {
+                    numberOfTilesEnclosedByTheLoop++;
+                } else if (loop[i][j] == 0 && isEnclosed(i, j)) {
+                    numberOfTilesEnclosedByTheLoop++;
+                }
+            }
+        }
+
+        return numberOfTilesEnclosedByTheLoop;
+
+    }
+
+    private boolean isEnclosed(int i, int j) {
+        // Starting from the given position, we will check if there is a path to the border of the map,
+        // and how many times it crosses the loop.
+        // If it crosses the loop an odd number of times, it means that the tile is enclosed by the loop.
+        int numberOfTimesCrossed = 0;
+        int[] currentPosition = new int[]{i, j};
+        int[] nextPosition;
+        do {
+            nextPosition = getNextPosition(currentPosition);
+            if (loop[nextPosition[0]][nextPosition[1]] == 1) {
+                numberOfTimesCrossed++;
+            }
+            currentPosition = nextPosition;
+        } while (!isBorder(nextPosition));
+
+        return numberOfTimesCrossed % 2 == 1;
+    }
+
+    private boolean isBorder(int[] position) {
+        return position[0] == 0
+                || position[0] == map.length - 1
+                || position[1] == 0
+                || position[1] == map[0].length - 1;
+    }
+
+    private int[] getNextPosition(int[] currentPosition) {
+        //we will trace a path to the border of the map towards the right, and count how many times it crosses the loop.
+        // If it crosses the loop an odd number of times, it means that the tile is enclosed by the loop.
+        return new int[]{currentPosition[0], currentPosition[1] + 1};
     }
 }
