@@ -85,4 +85,8 @@ public class PipeRunner {
                 ", " + this.hashCode() +
                 '}';
     }
+
+    public int[] getCurrentPosition() {
+        return currentPosition;
+    }
 }
