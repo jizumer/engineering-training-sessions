@@ -15,7 +15,7 @@ public class Day12 {
 
     private int numberOfArrangements(char[] springs, String[] groupsSizes) {
         List<Integer> unknownIndexes = locateUnknownIdexes(springs);
-        if (unknownIndexes.size() == 0) {
+        if (unknownIndexes.isEmpty()) {
             return isValid(springs, groupsSizes) ? 1 : 0;
         }
 
@@ -47,8 +47,8 @@ public class Day12 {
         // generate a list of the sizes of groups of consecutive characters '#' found in the array springs
         List<Integer> detectedGroupsSizes = new ArrayList<>();
         int groupSize = 0;
-        for (int i = 0; i < springs.length; i++) {
-            if (springs[i] == '#') {
+        for (char spring : springs) {
+            if (spring == '#') {
                 groupSize++;
             } else {
                 if (groupSize > 0) {
