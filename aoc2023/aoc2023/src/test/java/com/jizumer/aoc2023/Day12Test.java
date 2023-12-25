@@ -64,4 +64,10 @@ class Day12Test {
                                 "src/test/resources/day12-input.txt"));
     }
 
+    @Test
+    public void shouldExpandConditionRecords() {
+        assertEquals(".#?.#?.#?.#?.# 1,1,1,1,1",
+                new Day12().expandConditionRecord(".# 1"));
+    }
+
 }

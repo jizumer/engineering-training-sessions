@@ -75,4 +75,24 @@ public class Day12 {
                 .reduce(Integer::sum)
                 .orElseThrow();
     }
+
+    public String expandConditionRecord(String conditionRecord) {
+        String springs = conditionRecord.split(" ")[0];
+        String groupsSizes = conditionRecord.split(" ")[1];
+
+
+        StringBuilder expandedConditionRecord = new StringBuilder();
+        for (int i = 0; i < 4; i++) {
+            expandedConditionRecord.append(springs);
+            expandedConditionRecord.append("?");
+        }
+        expandedConditionRecord.append(springs);
+        expandedConditionRecord.append(" ");
+        for (int i = 0; i < 4; i++) {
+            expandedConditionRecord.append(groupsSizes);
+            expandedConditionRecord.append(",");
+        }
+        expandedConditionRecord.append(groupsSizes);
+        return expandedConditionRecord.toString();
+    }
 }
