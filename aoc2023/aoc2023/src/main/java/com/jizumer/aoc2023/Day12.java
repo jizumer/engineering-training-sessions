@@ -1,11 +1,14 @@
 package com.jizumer.aoc2023;
 
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 public class Day12 {
-    public int shouldFindNumberOfArrangementsByConditionRecord(String conditionRecord) {
+    public int findNumberOfArrangementsByConditionRecord(String conditionRecord) {
         char[] springs = conditionRecord.split(" ")[0].toCharArray();
         String[] groupsSizes = conditionRecord.split(" ")[1].split(",");
 
@@ -63,5 +66,13 @@ public class Day12 {
             }
         }
         return unknownIndexes;
+    }
+
+    public int findSumOfArrangementsByConditionRecordFile(String s) throws FileNotFoundException {
+        return new BufferedReader(new FileReader(s))
+                .lines()
+                .map(this::findNumberOfArrangementsByConditionRecord)
+                .reduce(Integer::sum)
+                .orElseThrow();
     }
 }
