@@ -31,16 +31,8 @@ public class Day12 {
     }
 
     private boolean isValid(char[] springs, String[] expectedGroupSizes) {
-
         String[] detectedGroupsSizes = detectGroupOfBrokenSpringSizes(springs);
-
-
-        boolean valid = Arrays.equals(detectedGroupsSizes, expectedGroupSizes);
-
-        System.out.println("Springs: " + Arrays.toString(springs)
-                + " - " + Arrays.toString(detectedGroupsSizes)
-                + " - " + valid);
-        return valid;
+        return Arrays.equals(detectedGroupsSizes, expectedGroupSizes);
     }
 
     public String[] detectGroupOfBrokenSpringSizes(char[] springs) {
