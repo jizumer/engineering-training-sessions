@@ -32,12 +32,12 @@ public class MaxNumberOfKSumPairs {
         for (Map.Entry<Integer, Integer> entry : counts.entrySet()) {
             if (entry.getKey() > k / 2.0) break;
             if (entry.getKey() == k / 2.0) {
-                maxOperations += Math.floor(entry.getValue() / 2);
+                maxOperations += (int) Math.floor(entry.getValue() / 2.0);
                 break;
             }
             maxOperations
                     += Math.min(entry.getValue(),
-                    counts.getOrDefault(k - entry.getValue(), 0));
+                    counts.getOrDefault(k - entry.getKey(), 0));
         }
 
         return maxOperations;

@@ -21,4 +21,11 @@ class MaxNumberOfKSumPairsTest {
         assertEquals(1, new MaxNumberOfKSumPairs().maxOperations(nums, k));
     }
 
+    @Test
+    void maxOperations3() {
+        int[] nums = {2,2,2,3,1,1,4,1};
+        int k = 4;
+        assertEquals(2, new MaxNumberOfKSumPairs().maxOperations(nums, k));
+    }
+
 }
