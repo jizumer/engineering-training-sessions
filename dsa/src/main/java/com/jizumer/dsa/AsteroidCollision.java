@@ -18,30 +18,21 @@ public class AsteroidCollision {
 
     private void simulateCollision(Stack<Integer> seen, int a) {
 
-        if (seen.isEmpty()) {
+        if (seen.isEmpty() || !willCollide(seen.peek(), a)) {
             seen.push(a);
             return;
         }
 
-        while (!seen.isEmpty()) {
-            if (!willCollide(seen.peek(), a)) {
-                seen.push(a);
-                return;
-            }
-
             int peek = Math.abs(seen.peek());
             int asteroid = Math.abs(a);
 
-            if (peek > asteroid) break;
+            if (peek > asteroid) return;
             if (peek < asteroid) {
                 seen.pop();
-                continue;
+                simulateCollision(seen, a);
+                return;
             }
             seen.pop();
-            break;
-        }
-
-
     }
 
     private boolean willCollide(Integer a, int b) {

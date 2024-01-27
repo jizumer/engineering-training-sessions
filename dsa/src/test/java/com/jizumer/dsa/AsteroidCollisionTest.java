@@ -32,4 +32,11 @@ class AsteroidCollisionTest {
                 new AsteroidCollision()
                         .asteroidCollision(new int[]{-2, -2, 1, -2}));
     }
+
+    @Test
+    void shouldPushAsteroidsEvenIfTheyDontCollide() {
+        assertArrayEquals(new int[]{-2, -2, -2},
+                new AsteroidCollision()
+                        .asteroidCollision(new int[]{1, -2, -2, -2}));
+    }
 }
