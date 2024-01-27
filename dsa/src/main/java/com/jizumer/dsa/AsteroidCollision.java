@@ -17,7 +17,7 @@ public class AsteroidCollision {
     }
 
     private void simulateCollision(Stack<Integer> seen, int a) {
-        if (seen.isEmpty() || !areOpposite(seen.peek(), a)) {
+        if (seen.isEmpty() || !willCollide(seen.peek(), a)) {
             seen.push(a);
             return;
         }
@@ -38,7 +38,7 @@ public class AsteroidCollision {
 
     }
 
-    private boolean areOpposite(Integer a, int b) {
-        return ((a ^ b) < 0);
+    private boolean willCollide(Integer a, int b) {
+        return (a > 0 && b < 0);
     }
 }

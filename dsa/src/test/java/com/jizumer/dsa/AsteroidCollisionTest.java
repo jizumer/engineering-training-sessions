@@ -18,4 +18,11 @@ class AsteroidCollisionTest {
                         .asteroidCollision(new int[]{8, -8}));
     }
 
+    @Test
+    void shouldConsiderAsteroidsNeverColliding() {
+        assertArrayEquals(new int[]{-2, -1, 1, 2},
+                new AsteroidCollision()
+                        .asteroidCollision(new int[]{-2, -1, 1, 2}));
+    }
+
 }
