@@ -17,12 +17,18 @@ public class AsteroidCollision {
     }
 
     private void simulateCollision(Stack<Integer> seen, int a) {
-        if (seen.isEmpty() || !willCollide(seen.peek(), a)) {
+
+        if (seen.isEmpty()) {
             seen.push(a);
             return;
         }
 
         while (!seen.isEmpty()) {
+            if (!willCollide(seen.peek(), a)) {
+                seen.push(a);
+                return;
+            }
+
             int peek = Math.abs(seen.peek());
             int asteroid = Math.abs(a);
 

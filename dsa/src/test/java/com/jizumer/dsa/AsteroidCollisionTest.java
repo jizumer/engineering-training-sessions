@@ -25,4 +25,11 @@ class AsteroidCollisionTest {
                         .asteroidCollision(new int[]{-2, -1, 1, 2}));
     }
 
+
+    @Test
+    void shouldResultInOnlyNegativeAsteroids() {
+        assertArrayEquals(new int[]{-2, -2, -2},
+                new AsteroidCollision()
+                        .asteroidCollision(new int[]{-2, -2, 1, -2}));
+    }
 }
