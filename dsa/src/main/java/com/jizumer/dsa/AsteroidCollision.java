@@ -22,9 +22,12 @@ public class AsteroidCollision {
             return;
         }
 
-        while(!seen.isEmpty()) {
-            if(seen.peek() > a) break;
-            if(seen.peek() < a) {
+        while (!seen.isEmpty()) {
+            int peek = Math.abs(seen.peek());
+            int asteroid = Math.abs(a);
+
+            if (peek > asteroid) break;
+            if (peek < asteroid) {
                 seen.pop();
                 continue;
             }

@@ -11,4 +11,11 @@ class AsteroidCollisionTest {
         assertArrayEquals(new int[]{5, 10}, new AsteroidCollision().asteroidCollision(new int[]{5, 10, -5}));
     }
 
+    @Test
+    void shouldReturnEmptyArrayWithJustTwoOppositeAsteroids() {
+        assertArrayEquals(new int[]{},
+                new AsteroidCollision()
+                        .asteroidCollision(new int[]{8, -8}));
+    }
+
 }
