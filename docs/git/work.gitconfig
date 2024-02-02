@@ -1,0 +1,7 @@
+[core]
+    sshCommand = ssh -i ~/.ssh/<private_ssh_key> -F /dev/null
+
+[user]
+    name = Dev name
+    email = john_doe@whatever.whatever
+    signingkey = <GPG private key LOCAL ID>

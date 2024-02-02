@@ -1,0 +1,9 @@
+[commit]
+    gpgsign=true
+
+; Project includes
+[includeIf "gitdir:~/code/work/"]
+    path = ~/code/work/work.gitconfig
+
+[includeIf "gitdir:~/code/personal/"]
+    path = ~/code/personal/personal.gitconfig
