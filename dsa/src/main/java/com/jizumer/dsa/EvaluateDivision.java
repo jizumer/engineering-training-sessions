@@ -13,6 +13,7 @@ public class EvaluateDivision {
         double[] costs = new double[queries.size()];
 
         for (int i = 0; i < queries.size(); i++) {
+            resetStatuses(graph);
 
             Node start = graph.get(queries.get(i).getFirst());
             Node end = graph.get(queries.get(i).get(1));
@@ -21,18 +22,31 @@ public class EvaluateDivision {
                 costs[i] = -1.0;
                 continue;
             }
+
+            if (start.equals(end)) {
+                costs[i] = 1.0;
+                continue;
+            }
             costs[i] = dfs(graph, start, end);
         }
 
         return costs;
     }
 
+    private void resetStatuses(Map<String, Node> graph) {
+        for (Node node : graph.values()) {
+            node.setStatus(Status.UNVISITED);
+        }
+    }
+
     private double dfs(Map<String, Node> graph, Node start, Node end) {
         if (start.neighbours.containsKey(end)) return start.neighbours.get(end);
         for (Map.Entry<Node, Double> neighbour : start.neighbours.entrySet()) {
-
+            if(neighbour.getKey().status == Status.VISITED) continue;
+            neighbour.getKey().setStatus(Status.VISITED);
             double attempt = dfs(graph, neighbour.getKey(), end);
             if (attempt != -1.0) return neighbour.getValue() * attempt;
+            neighbour.getKey().setStatus(Status.UNVISITED);
         }
 
         return -1.0;
@@ -63,9 +77,15 @@ public class EvaluateDivision {
         return graph;
     }
 
+    static enum Status {
+        UNVISITED, VISITED
+    }
+
     class Node {
         private final String label;
         private final Map<Node, Double> neighbours = new HashMap<>();
+
+        private Status status = Status.UNVISITED;
 
         public Node(String label) {
             this.label = label;
@@ -81,6 +101,10 @@ public class EvaluateDivision {
 
         public Map<Node, Double> getNeighbours() {
             return neighbours;
+        }
+
+        public void setStatus(Status status) {
+            this.status = status;
         }
     }
 }

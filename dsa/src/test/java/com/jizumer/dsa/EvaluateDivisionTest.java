@@ -35,4 +35,21 @@ class EvaluateDivisionTest {
         assertArrayEquals(new double[]{6.0, 0.5, -1.0, 1.0, -1.0},
                 new EvaluateDivision().calcEquation(equations, values, queries));
     }
+
+    // equations [["x1","x2"],["x2","x3"],["x3","x4"],["x4","x5"]]
+    // values [3.0,4.0,5.0,6.0]
+    // queries [["x1","x5"],["x5","x2"],["x2","x4"],["x2","x2"],["x2","x9"],["x9","x9"]]
+    @Test
+    void shouldCalculatePathsWithMoreComplicatedLabelsInItsNodes() {
+        List<List<String>> equations = List.of(List.of("x1", "x2"), List.of("x2", "x3"), List.of("x3", "x4"), List.of("x4", "x5"));
+        double[] values = new double[]{3.0, 4.0, 5.0, 6.0};
+        List<List<String>> queries = List.of(List.of("x1", "x5"),
+                List.of("x5", "x2"),
+                List.of("x2", "x4"),
+                List.of("x2", "x2"),
+                List.of("x2", "x9"),
+                List.of("x9", "x9"));
+        assertArrayEquals(new double[]{360.0, 0.008333333333333333, 20.0, 1.0, -1.0, -1.0},
+                new EvaluateDivision().calcEquation(equations, values, queries));
+    }
 }
