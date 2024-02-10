@@ -21,4 +21,18 @@ class EvaluateDivisionTest {
         assertEquals(2, graph.get("b").getNeighbours().size());
     }
 
+
+    @Test
+    void shouldCalculatePaths() {
+        List<List<String>> equations = List.of(List.of("a", "b"), List.of("b", "c"));
+        double[] values = new double[]{2.0, 3.0};
+        List<List<String>> queries = List.of(
+                List.of("a", "c"),
+                List.of("b", "a"),
+                List.of("a", "e"),
+                List.of("a", "a"),
+                List.of("x", "x"));
+        assertArrayEquals(new double[]{6.0, 0.5, -1.0, 1.0, -1.0},
+                new EvaluateDivision().calcEquation(equations, values, queries));
+    }
 }
