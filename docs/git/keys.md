@@ -14,7 +14,6 @@ You can obtain the GPG private key LOCAL ID executing the following command:
 $ gpg --list-secret-keys --keyid-format=long
 ```
 
-
 Don't forget to upload the public GPG key to Github
 GPG keychain > export (don't include secret key) > copy > paste in Github
 
@@ -23,3 +22,4 @@ GPG keychain > export (don't include secret key) > copy > paste in Github
 xxxx
 -----END PGP PUBLIC KEY BLOCK-----
 ```
+
