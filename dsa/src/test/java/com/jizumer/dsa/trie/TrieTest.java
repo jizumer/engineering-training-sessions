@@ -1,4 +1,4 @@
-package com.jizumer.dsa;
+package com.jizumer.dsa.trie;
 
 import org.junit.jupiter.api.Test;
 
@@ -10,7 +10,7 @@ class TrieTest {
      * Expected: [null,null,true,false,true,null,true]
      */
     @Test
-    void shouldTestHappyPath(){
+    void shouldTestHappyPath() {
         Trie trie = new Trie();
         trie.insert("apple");
         assert trie.search("apple");
