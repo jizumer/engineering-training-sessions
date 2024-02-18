@@ -1,5 +1,9 @@
 package com.jizumer.dsa.trie;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+
 public class TrieNode {
     private boolean endOfWord = false;
 
@@ -68,5 +72,35 @@ public class TrieNode {
         }
         sb.append("]");
         return sb.toString();
+    }
+
+
+    public List<String> findByPrefix(String prefix) {
+
+        List<String> words = new ArrayList<>();
+        TrieNode runner = this;
+
+        for (int i = 0; i < prefix.length(); i++) {
+            TrieNode next = runner.links[prefix.charAt(i) - 'a'];
+            if (next == null) return words;
+            runner = next;
+        }
+
+        dfs(runner, words, prefix);
+
+        return words;
+
+
+    }
+
+    private void dfs(TrieNode runner, List<String> words, String prefix) {
+        if(words.size() == 3) return;
+        if (runner.endOfWord) {
+            words.add(prefix);
+        }
+        for (int i = 0; i < R; i++) {
+            TrieNode child = runner.links[i];
+            if (child != null) dfs(child, words, prefix + (char) (i + 'a'));
+        }
     }
 }
