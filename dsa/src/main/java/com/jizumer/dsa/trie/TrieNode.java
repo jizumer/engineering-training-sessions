@@ -1,13 +1,13 @@
 package com.jizumer.dsa.trie;
 
-class TrieNode {
+public class TrieNode {
     private boolean endOfWord = false;
 
     private final int R = 26;
 
     private final TrieNode[] links = new TrieNode[R];
 
-    void insert(String word) {
+    public void insert(String word) {
         if (word.isEmpty()) {
             return;
         }
@@ -22,7 +22,7 @@ class TrieNode {
         links[letter - 'a'].insert(word.substring(1));
     }
 
-    boolean search(String word) {
+    public boolean search(String word) {
         if (word.isEmpty()) {
             return false;
         }
